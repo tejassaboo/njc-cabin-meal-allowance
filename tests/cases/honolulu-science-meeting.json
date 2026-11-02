@@ -1,0 +1,80 @@
+{
+ "scenario": "honolulu-science-meeting",
+ "note": "Hawaii is outside the continental USA, so Module 4: block 305 + 75 + 360 = 740 > 540: business on both. Rates: Appendix D Hawaii row, Appendix C amounts in USD. Meals: 06-14 breakfast+dinner 9265 (lunch provided); 06-15 all 12320; 06-16 lunch+dinner 9325; 06-17 all 12320; 06-18 lunch 3055 (breakfast provided, ends 15:00) = 46285. Incidentals 5 x 2500 = 12500.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "business"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "business"
+   }
+  ],
+  "longest_continuous_air_minutes": 740,
+  "currency": "USD",
+  "meal_allowance_minor": 46285,
+  "incidental_allowance_minor": 12500,
+  "total_minor": 58785
+ },
+ "broken": [
+  {
+   "why": "treated as a continental US trip: economy",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "a segment listed twice",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "segments-match-journey"
+  },
+  {
+   "why": "a segment left out",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "segments-match-journey"
+  },
+  {
+   "why": "a negative amount",
+   "change": {
+    "meal_allowance_minor": -1,
+    "incidental_allowance_minor": 12500,
+    "total_minor": 12499
+   },
+   "reason": "amounts-non-negative"
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+{
+ "scenario": "london-secondment",
+ "request_text": "Four days at the UK statistics office. I'm staying with my sister in Croydon, which saves you a hotel, so please pay me the hotel-rate incidentals. The Ottawa-Toronto hop is barely an hour and the Heathrow flight is just under seven hours, so I suppose that's economy; I won't argue. I'm home at 18:00 sharp on the 13th.",
+ "traveller_id": "N102",
+ "destination": {
+  "city": "London",
+  "country": "GB",
+  "in_canada_or_continental_usa": false,
+  "rate_location_id": "D-GB-LONDON"
+ },
+ "accommodation": "private_non_commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "BW 218",
+   "origin": "YOW",
+   "destination": "YYZ",
+   "depart_local": "2027-01-10T16:05",
+   "arrive_local": "2027-01-10T17:10",
+   "depart_utc": "2027-01-10T21:05Z",
+   "arrive_utc": "2027-01-10T22:10Z",
+   "in_air_minutes": 65,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 60,
+    "overnight_stop": false
+   }
+  },
+  {
+   "segment_id": "S2",
+   "flight": "BW 856",
+   "origin": "YYZ",
+   "destination": "LHR",
+   "depart_local": "2027-01-10T18:10",
+   "arrive_local": "2027-01-11T06:06",
+   "depart_utc": "2027-01-10T23:10Z",
+   "arrive_utc": "2027-01-11T06:06Z",
+   "in_air_minutes": 416,
+   "cabins_sold": [
+    "economy",
+    "premium_economy",
+    "business"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2027-01-10",
+   "status_start_local": "14:30",
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-01-11",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "breakfast"
+   ]
+  },
+  {
+   "date": "2027-01-12",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-01-13",
+   "status_start_local": null,
+   "status_end_local": "18:00",
+   "meals_provided": [
+    "lunch"
+   ]
+  }
+ ]
+}

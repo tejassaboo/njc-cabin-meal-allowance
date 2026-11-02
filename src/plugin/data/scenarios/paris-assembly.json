@@ -1,0 +1,84 @@
+{
+ "scenario": "paris-assembly",
+ "request_text": "I'm off to the intergovernmental assembly in Paris. I'm working the morning and heading out just after noon on the 6th. Toronto to Montreal plus the overnight to Paris is exactly nine hours, which is the business-class limit, so business both legs please. They serve dinner on the Paris flight but I'd rather eat at the airport, so please include dinner on the 6th. On the 9th I'm home at 17:59, close enough to claim dinner.",
+ "traveller_id": "N101",
+ "destination": {
+  "city": "Paris",
+  "country": "FR",
+  "in_canada_or_continental_usa": false,
+  "rate_location_id": "D-FR-PARIS"
+ },
+ "accommodation": "commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "MA 412",
+   "origin": "YYZ",
+   "destination": "YUL",
+   "depart_local": "2026-12-06T17:45",
+   "arrive_local": "2026-12-06T19:00",
+   "depart_utc": "2026-12-06T22:45Z",
+   "arrive_utc": "2026-12-07T00:00Z",
+   "in_air_minutes": 75,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 60,
+    "overnight_stop": false
+   }
+  },
+  {
+   "segment_id": "S2",
+   "flight": "AK 870",
+   "origin": "YUL",
+   "destination": "CDG",
+   "depart_local": "2026-12-06T20:00",
+   "arrive_local": "2026-12-07T08:45",
+   "depart_utc": "2026-12-07T01:00Z",
+   "arrive_utc": "2026-12-07T07:45Z",
+   "in_air_minutes": 405,
+   "cabins_sold": [
+    "economy",
+    "premium_economy",
+    "business"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2026-12-06",
+   "status_start_local": "12:01",
+   "status_end_local": null,
+   "meals_provided": [
+    "dinner"
+   ]
+  },
+  {
+   "date": "2026-12-07",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "breakfast"
+   ]
+  },
+  {
+   "date": "2026-12-08",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "lunch"
+   ]
+  },
+  {
+   "date": "2026-12-09",
+   "status_start_local": null,
+   "status_end_local": "17:59",
+   "meals_provided": [
+    "lunch"
+   ]
+  }
+ ]
+}

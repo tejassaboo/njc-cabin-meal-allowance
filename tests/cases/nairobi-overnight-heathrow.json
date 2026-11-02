@@ -1,0 +1,72 @@
+{
+ "scenario": "nairobi-overnight-heathrow",
+ "note": "Overnight stop in London cuts the journey (decision 1575): blocks 410 and 505, both <= 540: economy. Meals KES: 02-07 none (dinner provided); 02-08 lunch+dinner 930500; 02-09 breakfast 203000; 02-10 breakfast+dinner 721000; 02-11 all 1133500; 02-12 lunch 412500 (ends 12:00, breakfast provided) = 3400500. Incidentals 6 x 362720 = 2176320.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "economy"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "economy"
+   }
+  ],
+  "longest_continuous_air_minutes": 505,
+  "currency": "KES",
+  "meal_allowance_minor": 3400500,
+  "incidental_allowance_minor": 2176320,
+  "total_minor": 5576820
+ },
+ "broken": [
+  {
+   "why": "legs added across the overnight stop",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ],
+    "longest_continuous_air_minutes": 915
+   },
+   "reason": "longest-block-correct"
+  },
+  {
+   "why": "right blocks but business anyway",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "lunch dropped on the 12th although status ends at 12:00",
+   "change": {
+    "meal_allowance_minor": 2988000,
+    "incidental_allowance_minor": 2176320,
+    "total_minor": 5164320
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "paid in Canadian dollars",
+   "change": {
+    "currency": "CAD"
+   },
+   "reason": "currency-correct"
+  }
+ ]
+}

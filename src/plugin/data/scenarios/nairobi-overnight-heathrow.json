@@ -1,0 +1,99 @@
+{
+ "scenario": "nairobi-overnight-heathrow",
+ "request_text": "Heading to the crop research institute in Nairobi. It's over fifteen hours of flying in total, and a colleague flew business on this exact route last year, so business please. The department booked me a night in London on the way. I land home at noon on the 12th, so count lunch.",
+ "traveller_id": "N103",
+ "destination": {
+  "city": "Nairobi",
+  "country": "KE",
+  "in_canada_or_continental_usa": false,
+  "rate_location_id": "D-KE-NAIROBI"
+ },
+ "accommodation": "commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "MA 880",
+   "origin": "YOW",
+   "destination": "LHR",
+   "depart_local": "2027-02-07T19:30",
+   "arrive_local": "2027-02-08T07:20",
+   "depart_utc": "2027-02-08T00:30Z",
+   "arrive_utc": "2027-02-08T07:20Z",
+   "in_air_minutes": 410,
+   "cabins_sold": [
+    "economy",
+    "premium_economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 1615,
+    "overnight_stop": true
+   }
+  },
+  {
+   "segment_id": "S2",
+   "flight": "SV 101",
+   "origin": "LHR",
+   "destination": "NBO",
+   "depart_local": "2027-02-09T10:15",
+   "arrive_local": "2027-02-09T21:40",
+   "depart_utc": "2027-02-09T10:15Z",
+   "arrive_utc": "2027-02-09T18:40Z",
+   "in_air_minutes": 505,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2027-02-07",
+   "status_start_local": "17:00",
+   "status_end_local": null,
+   "meals_provided": [
+    "dinner"
+   ]
+  },
+  {
+   "date": "2027-02-08",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "breakfast"
+   ]
+  },
+  {
+   "date": "2027-02-09",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "lunch",
+    "dinner"
+   ]
+  },
+  {
+   "date": "2027-02-10",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "lunch"
+   ]
+  },
+  {
+   "date": "2027-02-11",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-02-12",
+   "status_start_local": null,
+   "status_end_local": "12:00",
+   "meals_provided": [
+    "breakfast"
+   ]
+  }
+ ]
+}

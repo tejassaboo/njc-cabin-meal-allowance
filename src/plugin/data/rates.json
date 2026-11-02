@@ -1,0 +1,338 @@
+{
+ "C-CANADA": {
+  "appendix": "appendix_c",
+  "place": "Canada (Appendix C, Canada column)",
+  "currency": "CAD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2995,
+    "lunch_minor": 3055,
+    "dinner_minor": 6270,
+    "meal_total_minor": 12320,
+    "incidental_minor": 2500
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2995,
+    "lunch_minor": 3055,
+    "dinner_minor": 6270,
+    "meal_total_minor": 12320,
+    "incidental_minor": 2500
+   }
+  ]
+ },
+ "C-YUKON": {
+  "appendix": "appendix_c",
+  "place": "Yukon (Appendix C)",
+  "currency": "CAD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2735,
+    "lunch_minor": 3470,
+    "dinner_minor": 8130,
+    "meal_total_minor": 14335,
+    "incidental_minor": 2500
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2735,
+    "lunch_minor": 3470,
+    "dinner_minor": 8130,
+    "meal_total_minor": 14335,
+    "incidental_minor": 2500
+   }
+  ]
+ },
+ "C-NWT": {
+  "appendix": "appendix_c",
+  "place": "Northwest Territories (Appendix C)",
+  "currency": "CAD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2930,
+    "lunch_minor": 3475,
+    "dinner_minor": 7415,
+    "meal_total_minor": 13820,
+    "incidental_minor": 2500
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2930,
+    "lunch_minor": 3475,
+    "dinner_minor": 7415,
+    "meal_total_minor": 13820,
+    "incidental_minor": 2500
+   }
+  ]
+ },
+ "C-NUNAVUT": {
+  "appendix": "appendix_c",
+  "place": "Nunavut (Appendix C)",
+  "currency": "CAD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 3555,
+    "lunch_minor": 4220,
+    "dinner_minor": 10190,
+    "meal_total_minor": 17965,
+    "incidental_minor": 2500
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 3555,
+    "lunch_minor": 4220,
+    "dinner_minor": 10190,
+    "meal_total_minor": 17965,
+    "incidental_minor": 2500
+   }
+  ]
+ },
+ "C-USA": {
+  "appendix": "appendix_c",
+  "place": "United States of America, continental (Appendix C, Canada amounts in US funds)",
+  "currency": "USD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2995,
+    "lunch_minor": 3055,
+    "dinner_minor": 6270,
+    "meal_total_minor": 12320,
+    "incidental_minor": 2500
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2995,
+    "lunch_minor": 3055,
+    "dinner_minor": 6270,
+    "meal_total_minor": 12320,
+    "incidental_minor": 2500
+   }
+  ]
+ },
+ "C-ALASKA": {
+  "appendix": "appendix_c",
+  "place": "Alaska (Appendix C, Yukon amounts in US funds)",
+  "currency": "USD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2735,
+    "lunch_minor": 3470,
+    "dinner_minor": 8130,
+    "meal_total_minor": 14335,
+    "incidental_minor": 2500
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2735,
+    "lunch_minor": 3470,
+    "dinner_minor": 8130,
+    "meal_total_minor": 14335,
+    "incidental_minor": 2500
+   }
+  ]
+ },
+ "D-FR-PARIS": {
+  "appendix": "appendix_d",
+  "place": "France, Paris (Appendix D)",
+  "currency": "EUR",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2490,
+    "lunch_minor": 4520,
+    "dinner_minor": 5260,
+    "meal_total_minor": 12270,
+    "incidental_minor": 3926
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2490,
+    "lunch_minor": 4520,
+    "dinner_minor": 5260,
+    "meal_total_minor": 12270,
+    "incidental_minor": 2454
+   }
+  ]
+ },
+ "D-DE-BERLIN": {
+  "appendix": "appendix_d",
+  "place": "Germany, Berlin (Appendix D)",
+  "currency": "EUR",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2865,
+    "lunch_minor": 4435,
+    "dinner_minor": 6045,
+    "meal_total_minor": 13345,
+    "incidental_minor": 4270
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2865,
+    "lunch_minor": 4435,
+    "dinner_minor": 6045,
+    "meal_total_minor": 13345,
+    "incidental_minor": 2669
+   }
+  ]
+ },
+ "D-GB-LONDON": {
+  "appendix": "appendix_d",
+  "place": "United Kingdom, London (Appendix D)",
+  "currency": "GBP",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2335,
+    "lunch_minor": 4085,
+    "dinner_minor": 4625,
+    "meal_total_minor": 11045,
+    "incidental_minor": 3534
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2335,
+    "lunch_minor": 4085,
+    "dinner_minor": 4625,
+    "meal_total_minor": 11045,
+    "incidental_minor": 2209
+   }
+  ]
+ },
+ "D-KE-NAIROBI": {
+  "appendix": "appendix_d",
+  "place": "Kenya, Nairobi (Appendix D)",
+  "currency": "KES",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 203000,
+    "lunch_minor": 412500,
+    "dinner_minor": 518000,
+    "meal_total_minor": 1133500,
+    "incidental_minor": 362720
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 203000,
+    "lunch_minor": 412500,
+    "dinner_minor": 518000,
+    "meal_total_minor": 1133500,
+    "incidental_minor": 226700
+   }
+  ]
+ },
+ "D-JP-TOKYO": {
+  "appendix": "appendix_d",
+  "place": "Japan, Tokyo (Appendix D)",
+  "currency": "JPY",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 604000,
+    "lunch_minor": 660000,
+    "dinner_minor": 982000,
+    "meal_total_minor": 2246000,
+    "incidental_minor": 718720
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 604000,
+    "lunch_minor": 660000,
+    "dinner_minor": 982000,
+    "meal_total_minor": 2246000,
+    "incidental_minor": 449200
+   }
+  ]
+ },
+ "D-MX-MEXICO-CITY": {
+  "appendix": "appendix_d",
+  "place": "Mexico, Mexico City (Appendix D, paid in Canadian dollars)",
+  "currency": "CAD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 3315,
+    "lunch_minor": 6545,
+    "dinner_minor": 8410,
+    "meal_total_minor": 18270,
+    "incidental_minor": 5846
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 3315,
+    "lunch_minor": 6545,
+    "dinner_minor": 8410,
+    "meal_total_minor": 18270,
+    "incidental_minor": 3654
+   }
+  ]
+ },
+ "D-AU-SYDNEY": {
+  "appendix": "appendix_d",
+  "place": "Australia, Sydney (Appendix D)",
+  "currency": "AUD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 4480,
+    "lunch_minor": 8500,
+    "dinner_minor": 11615,
+    "meal_total_minor": 24595,
+    "incidental_minor": 7870
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 4480,
+    "lunch_minor": 8500,
+    "dinner_minor": 11615,
+    "meal_total_minor": 24595,
+    "incidental_minor": 4919
+   }
+  ]
+ },
+ "D-US-HAWAII": {
+  "appendix": "appendix_d",
+  "place": "Hawaii, outside the continental USA (Appendix D, Appendix C amounts in US funds)",
+  "currency": "USD",
+  "effective_date": "2026-10-01",
+  "rows": [
+   {
+    "accommodation": "commercial",
+    "breakfast_minor": 2995,
+    "lunch_minor": 3055,
+    "dinner_minor": 6270,
+    "meal_total_minor": 12320,
+    "incidental_minor": 2500
+   },
+   {
+    "accommodation": "private_non_commercial",
+    "breakfast_minor": 2995,
+    "lunch_minor": 3055,
+    "dinner_minor": 6270,
+    "meal_total_minor": 12320,
+    "incidental_minor": 2500
+   }
+  ]
+ }
+}

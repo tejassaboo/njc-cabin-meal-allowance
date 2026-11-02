@@ -1,0 +1,83 @@
+{
+ "scenario": "nairobi-daytime-wait",
+ "note": "A five-hour daytime wait at Heathrow is an ordinary connection: block 400 + 300 + 505 = 1205 > 540: business on both. Meals KES: 03-01 dinner 518000 (start 18:00 counts); 03-02 lunch 412500; 03-03 all 1133500; 03-04 all 1133500; 03-05 none (ends 06:59) = 3197500. Incidentals 5 x 362720 = 1813600.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "business"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "business"
+   }
+  ],
+  "longest_continuous_air_minutes": 1205,
+  "currency": "KES",
+  "meal_allowance_minor": 3197500,
+  "incidental_allowance_minor": 1813600,
+  "total_minor": 5011100
+ },
+ "broken": [
+  {
+   "why": "long wait treated as a break, as the manager says",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ],
+    "longest_continuous_air_minutes": 505
+   },
+   "reason": "longest-block-correct"
+  },
+  {
+   "why": "right block but economy anyway",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "dinner dropped on the 1st although status starts at 18:00",
+   "change": {
+    "meal_allowance_minor": 2679500,
+    "incidental_allowance_minor": 1813600,
+    "total_minor": 4493100
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "breakfast claimed on the 5th although status ends at 06:59",
+   "change": {
+    "meal_allowance_minor": 3400500,
+    "incidental_allowance_minor": 1813600,
+    "total_minor": 5214100
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "the return part day gets no incidental",
+   "change": {
+    "meal_allowance_minor": 3197500,
+    "incidental_allowance_minor": 1450880,
+    "total_minor": 4648380
+   },
+   "reason": "incidentals-correct"
+  }
+ ]
+}

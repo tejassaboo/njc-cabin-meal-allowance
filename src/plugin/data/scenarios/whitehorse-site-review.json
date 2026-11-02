@@ -1,0 +1,72 @@
+{
+ "scenario": "whitehorse-site-review",
+ "request_text": "Bridge site review in Whitehorse. Door to door it's more than nine hours with the drive to the airport, so business please. Just use the normal Canada meal rates, the Yukon ones are basically the same. The hotel breakfast is included on the last day, but I'd like the allowance anyway.",
+ "traveller_id": "N108",
+ "destination": {
+  "city": "Whitehorse",
+  "country": "CA",
+  "in_canada_or_continental_usa": true,
+  "rate_location_id": "C-YUKON"
+ },
+ "accommodation": "commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "MA 301",
+   "origin": "YOW",
+   "destination": "YVR",
+   "depart_local": "2027-07-20T07:30",
+   "arrive_local": "2027-07-20T09:30",
+   "depart_utc": "2027-07-20T11:30Z",
+   "arrive_utc": "2027-07-20T16:30Z",
+   "in_air_minutes": 300,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 75,
+    "overnight_stop": false
+   }
+  },
+  {
+   "segment_id": "S2",
+   "flight": "MA 8231",
+   "origin": "YVR",
+   "destination": "YXY",
+   "depart_local": "2027-07-20T10:45",
+   "arrive_local": "2027-07-20T13:00",
+   "depart_utc": "2027-07-20T17:45Z",
+   "arrive_utc": "2027-07-20T20:00Z",
+   "in_air_minutes": 135,
+   "cabins_sold": [
+    "economy"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2027-07-20",
+   "status_start_local": "05:30",
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-07-21",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "lunch"
+   ]
+  },
+  {
+   "date": "2027-07-22",
+   "status_start_local": null,
+   "status_end_local": "23:15",
+   "meals_provided": [
+    "breakfast"
+   ]
+  }
+ ]
+}

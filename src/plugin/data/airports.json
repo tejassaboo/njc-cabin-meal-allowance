@@ -1,0 +1,68 @@
+{
+ "YOW": {
+  "code": "YOW",
+  "city": "Ottawa",
+  "country": "CA",
+  "tz": "America/Toronto"
+ },
+ "YYZ": {
+  "code": "YYZ",
+  "city": "Toronto Pearson",
+  "country": "CA",
+  "tz": "America/Toronto"
+ },
+ "YUL": {
+  "code": "YUL",
+  "city": "Montreal Trudeau",
+  "country": "CA",
+  "tz": "America/Toronto"
+ },
+ "YVR": {
+  "code": "YVR",
+  "city": "Vancouver",
+  "country": "CA",
+  "tz": "America/Vancouver"
+ },
+ "YXY": {
+  "code": "YXY",
+  "city": "Whitehorse",
+  "country": "CA",
+  "tz": "America/Whitehorse"
+ },
+ "LHR": {
+  "code": "LHR",
+  "city": "London Heathrow",
+  "country": "GB",
+  "tz": "Europe/London"
+ },
+ "CDG": {
+  "code": "CDG",
+  "city": "Paris Charles de Gaulle",
+  "country": "FR",
+  "tz": "Europe/Paris"
+ },
+ "NBO": {
+  "code": "NBO",
+  "city": "Nairobi Jomo Kenyatta",
+  "country": "KE",
+  "tz": "Africa/Nairobi"
+ },
+ "HND": {
+  "code": "HND",
+  "city": "Tokyo Haneda",
+  "country": "JP",
+  "tz": "Asia/Tokyo"
+ },
+ "IAD": {
+  "code": "IAD",
+  "city": "Washington Dulles",
+  "country": "US",
+  "tz": "America/New_York"
+ },
+ "HNL": {
+  "code": "HNL",
+  "city": "Honolulu",
+  "country": "US",
+  "tz": "Pacific/Honolulu"
+ }
+}

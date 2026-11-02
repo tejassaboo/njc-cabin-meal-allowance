@@ -1,0 +1,73 @@
+{
+ "scenario": "whitehorse-site-review",
+ "note": "Domestic (Module 3): economy on both, however long. Yukon has its own Appendix C column: breakfast 2735, lunch 3470, dinner 8130. Meals CAD: 07-20 all 14335; 07-21 breakfast+dinner 10865; 07-22 lunch+dinner 11600 (hotel breakfast provided) = 36800. Incidentals 3 x 2500 = 7500.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "economy"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "economy"
+   }
+  ],
+  "longest_continuous_air_minutes": 510,
+  "currency": "CAD",
+  "meal_allowance_minor": 36800,
+  "incidental_allowance_minor": 7500,
+  "total_minor": 44300
+ },
+ "broken": [
+  {
+   "why": "business on the Ottawa-Vancouver leg as requested",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "Canada column instead of Yukon",
+   "change": {
+    "meal_allowance_minor": 30910,
+    "incidental_allowance_minor": 7500,
+    "total_minor": 38410
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "the included hotel breakfast claimed",
+   "change": {
+    "meal_allowance_minor": 39535,
+    "incidental_allowance_minor": 7500,
+    "total_minor": 47035
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "business on a flight that sells only economy",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-are-sold"
+  }
+ ]
+}

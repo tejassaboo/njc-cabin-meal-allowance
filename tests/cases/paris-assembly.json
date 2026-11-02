@@ -1,0 +1,71 @@
+{
+ "scenario": "paris-assembly",
+ "note": "YYZ-YUL 75 + 60 connection + YUL-CDG 405 = exactly 540, not > 540: economy. Meals EUR: 12-06 none (start 12:01, dinner provided); 12-07 lunch+dinner 9780; 12-08 breakfast+dinner 7750; 12-09 breakfast 2490 (lunch provided, ends 17:59 so no dinner) = 20020. Incidentals 4 x 3926 = 15704.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "economy"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "economy"
+   }
+  ],
+  "longest_continuous_air_minutes": 540,
+  "currency": "EUR",
+  "meal_allowance_minor": 20020,
+  "incidental_allowance_minor": 15704,
+  "total_minor": 35724
+ },
+ "broken": [
+  {
+   "why": "exactly nine hours read as enough for business",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "connection left out of the block",
+   "change": {
+    "longest_continuous_air_minutes": 480
+   },
+   "reason": "longest-block-correct"
+  },
+  {
+   "why": "dinner claimed on the 9th although status ends at 17:59",
+   "change": {
+    "meal_allowance_minor": 25280,
+    "incidental_allowance_minor": 15704,
+    "total_minor": 40984
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "lunch claimed on the 6th although status starts at 12:01",
+   "change": {
+    "meal_allowance_minor": 24540,
+    "incidental_allowance_minor": 15704,
+    "total_minor": 40244
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "total is not the sum",
+   "change": {
+    "total_minor": 35725
+   },
+   "reason": "total-is-sum"
+  }
+ ]
+}

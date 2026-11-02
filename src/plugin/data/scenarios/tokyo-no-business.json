@@ -1,0 +1,84 @@
+{
+ "scenario": "tokyo-no-business",
+ "request_text": "Trade talks in Tokyo. Sakura Pacific doesn't sell business on the Toronto-Tokyo flight, so I guess the rules put me in economy the whole way; or could you just book business on another carrier? The reception dinner on the 14th is lavish, but I'd like the dinner allowance anyway. I leave home at 07:00 on the 12th.",
+ "traveller_id": "N105",
+ "destination": {
+  "city": "Tokyo",
+  "country": "JP",
+  "in_canada_or_continental_usa": false,
+  "rate_location_id": "D-JP-TOKYO"
+ },
+ "accommodation": "commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "MA 404",
+   "origin": "YOW",
+   "destination": "YYZ",
+   "depart_local": "2027-04-12T10:00",
+   "arrive_local": "2027-04-12T11:10",
+   "depart_utc": "2027-04-12T14:00Z",
+   "arrive_utc": "2027-04-12T15:10Z",
+   "in_air_minutes": 70,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 90,
+    "overnight_stop": false
+   }
+  },
+  {
+   "segment_id": "S2",
+   "flight": "SP 12",
+   "origin": "YYZ",
+   "destination": "HND",
+   "depart_local": "2027-04-12T12:40",
+   "arrive_local": "2027-04-13T14:50",
+   "depart_utc": "2027-04-12T16:40Z",
+   "arrive_utc": "2027-04-13T05:50Z",
+   "in_air_minutes": 790,
+   "cabins_sold": [
+    "economy",
+    "premium_economy"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2027-04-12",
+   "status_start_local": "07:00",
+   "status_end_local": null,
+   "meals_provided": [
+    "dinner"
+   ]
+  },
+  {
+   "date": "2027-04-13",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "breakfast",
+    "lunch"
+   ]
+  },
+  {
+   "date": "2027-04-14",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "dinner"
+   ]
+  },
+  {
+   "date": "2027-04-15",
+   "status_start_local": null,
+   "status_end_local": "18:30",
+   "meals_provided": [
+    "dinner"
+   ]
+  }
+ ]
+}

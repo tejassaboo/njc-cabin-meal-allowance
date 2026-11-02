@@ -1,0 +1,42 @@
+{
+ "N101": {
+  "traveller_id": "N101",
+  "name": "Élise Tremblay",
+  "role": "Policy analyst, multilateral affairs"
+ },
+ "N102": {
+  "traveller_id": "N102",
+  "name": "Marc Bélanger",
+  "role": "Survey statistician"
+ },
+ "N103": {
+  "traveller_id": "N103",
+  "name": "Nadia Haddad",
+  "role": "Crop scientist"
+ },
+ "N104": {
+  "traveller_id": "N104",
+  "name": "Samuel Otieno-Clarke",
+  "role": "Hydrologist"
+ },
+ "N105": {
+  "traveller_id": "N105",
+  "name": "Keiko Sato",
+  "role": "Fisheries trade officer"
+ },
+ "N106": {
+  "traveller_id": "N106",
+  "name": "Priya Raman",
+  "role": "Labour-market economist"
+ },
+ "N107": {
+  "traveller_id": "N107",
+  "name": "Owen MacLeod",
+  "role": "Oceanographer"
+ },
+ "N108": {
+  "traveller_id": "N108",
+  "name": "Louise Gagnon",
+  "role": "Northern infrastructure engineer"
+ }
+}

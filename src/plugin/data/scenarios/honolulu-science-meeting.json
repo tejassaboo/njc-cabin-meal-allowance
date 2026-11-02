@@ -1,0 +1,88 @@
+{
+ "scenario": "honolulu-science-meeting",
+ "request_text": "Pacific fisheries science meeting in Honolulu. It's just the United States, so I assume economy and the regular US allowances apply, even though it's over twelve hours from Ottawa with the Vancouver change.",
+ "traveller_id": "N107",
+ "destination": {
+  "city": "Honolulu",
+  "country": "US",
+  "in_canada_or_continental_usa": false,
+  "rate_location_id": "D-US-HAWAII"
+ },
+ "accommodation": "commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "BW 155",
+   "origin": "YOW",
+   "destination": "YVR",
+   "depart_local": "2027-06-14T08:00",
+   "arrive_local": "2027-06-14T10:05",
+   "depart_utc": "2027-06-14T12:00Z",
+   "arrive_utc": "2027-06-14T17:05Z",
+   "in_air_minutes": 305,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 75,
+    "overnight_stop": false
+   }
+  },
+  {
+   "segment_id": "S2",
+   "flight": "BW 1806",
+   "origin": "YVR",
+   "destination": "HNL",
+   "depart_local": "2027-06-14T11:20",
+   "arrive_local": "2027-06-14T14:20",
+   "depart_utc": "2027-06-14T18:20Z",
+   "arrive_utc": "2027-06-15T00:20Z",
+   "in_air_minutes": 360,
+   "cabins_sold": [
+    "economy",
+    "premium_economy",
+    "business"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2027-06-14",
+   "status_start_local": "06:30",
+   "status_end_local": null,
+   "meals_provided": [
+    "lunch"
+   ]
+  },
+  {
+   "date": "2027-06-15",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-06-16",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "breakfast"
+   ]
+  },
+  {
+   "date": "2027-06-17",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-06-18",
+   "status_start_local": null,
+   "status_end_local": "15:00",
+   "meals_provided": [
+    "breakfast"
+   ]
+  }
+ ]
+}

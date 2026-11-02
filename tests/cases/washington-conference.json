@@ -1,0 +1,59 @@
+{
+ "scenario": "washington-conference",
+ "note": "Continental USA is Module 3: economy whatever the request. Appendix C USA row pays the Canadian amounts in USD. Meals: 05-04 breakfast+lunch 6050 (dinner provided); 05-05 breakfast+dinner 9265; 05-06 breakfast 2995 (ends 11:59, no lunch) = 18310. Incidentals 3 x 2500 = 7500.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "economy"
+   }
+  ],
+  "longest_continuous_air_minutes": 100,
+  "currency": "USD",
+  "meal_allowance_minor": 18310,
+  "incidental_allowance_minor": 7500,
+  "total_minor": 25810
+ },
+ "broken": [
+  {
+   "why": "business as requested",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "paid in Canadian dollars",
+   "change": {
+    "currency": "CAD"
+   },
+   "reason": "currency-correct"
+  },
+  {
+   "why": "lunch claimed on the 6th although status ends at 11:59",
+   "change": {
+    "meal_allowance_minor": 21365,
+    "incidental_allowance_minor": 7500,
+    "total_minor": 28865
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "a segment that is not on the journey",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S9",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "segments-match-journey"
+  }
+ ]
+}

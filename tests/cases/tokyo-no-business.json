@@ -1,0 +1,89 @@
+{
+ "scenario": "tokyo-no-business",
+ "note": "Block 70 + 90 + 790 = 950 > 540. YOW-YYZ sells business: business. YYZ-HND sells no business: premium_economy (rule 4). Meals JPY: 04-12 breakfast+lunch 1264000 (start 07:00 counts; dinner provided); 04-13 dinner 982000; 04-14 breakfast+lunch 1264000; 04-15 breakfast+lunch 1264000 = 4774000. Incidentals 4 x 718720 = 2874880.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "business"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "premium_economy"
+   }
+  ],
+  "longest_continuous_air_minutes": 950,
+  "currency": "JPY",
+  "meal_allowance_minor": 4774000,
+  "incidental_allowance_minor": 2874880,
+  "total_minor": 7648880
+ },
+ "broken": [
+  {
+   "why": "business not sold, so economy",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "business on a flight that does not sell it",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-are-sold"
+  },
+  {
+   "why": "economy all the way, as the traveller guesses",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "breakfast dropped on the 12th although status starts at 07:00",
+   "change": {
+    "meal_allowance_minor": 4170000,
+    "incidental_allowance_minor": 2874880,
+    "total_minor": 7044880
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "the provided reception dinner claimed",
+   "change": {
+    "meal_allowance_minor": 5756000,
+    "incidental_allowance_minor": 2874880,
+    "total_minor": 8630880
+   },
+   "reason": "meals-correct"
+  }
+ ]
+}

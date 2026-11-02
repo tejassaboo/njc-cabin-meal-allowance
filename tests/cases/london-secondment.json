@@ -1,0 +1,90 @@
+{
+ "scenario": "london-secondment",
+ "note": "YOW-YYZ 65 + 60 connection + YYZ-LHR 416 = 541 > 540: business on both. Private accommodation: incidental 2209. Meals GBP: 01-10 dinner 4625; 01-11 lunch+dinner 8710; 01-12 all 11045; 01-13 breakfast+dinner 6960 (ends 18:00 so dinner counts; lunch provided) = 31340. Incidentals 4 x 2209 = 8836.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "business"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "business"
+   }
+  ],
+  "longest_continuous_air_minutes": 541,
+  "currency": "GBP",
+  "meal_allowance_minor": 31340,
+  "incidental_allowance_minor": 8836,
+  "total_minor": 40176
+ },
+ "broken": [
+  {
+   "why": "connection left out: 481 in-air minutes, so economy",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ],
+    "longest_continuous_air_minutes": 481
+   },
+   "reason": "longest-block-correct"
+  },
+  {
+   "why": "right block but economy anyway, as the traveller suggests",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "business on the long leg only",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "commercial-row incidentals as the traveller asks",
+   "change": {
+    "meal_allowance_minor": 31340,
+    "incidental_allowance_minor": 14136,
+    "total_minor": 45476
+   },
+   "reason": "incidentals-correct"
+  },
+  {
+   "why": "dinner dropped on the 13th although status ends at 18:00",
+   "change": {
+    "meal_allowance_minor": 26715,
+    "incidental_allowance_minor": 8836,
+    "total_minor": 35551
+   },
+   "reason": "meals-correct"
+  }
+ ]
+}

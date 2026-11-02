@@ -1,0 +1,54 @@
+{
+ "scenario": "washington-conference",
+ "request_text": "Labour statistics conference in Washington. Business class please, it's a painfully early flight. Since it's the States I assume you'll pay the allowances in Canadian dollars at the US government per diem. I'm home at 11:59 on the 6th, so please add lunch that day.",
+ "traveller_id": "N106",
+ "destination": {
+  "city": "Washington",
+  "country": "US",
+  "in_canada_or_continental_usa": true,
+  "rate_location_id": "C-USA"
+ },
+ "accommodation": "commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "MA 7341",
+   "origin": "YOW",
+   "destination": "IAD",
+   "depart_local": "2027-05-04T07:15",
+   "arrive_local": "2027-05-04T08:55",
+   "depart_utc": "2027-05-04T11:15Z",
+   "arrive_utc": "2027-05-04T12:55Z",
+   "in_air_minutes": 100,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2027-05-04",
+   "status_start_local": "05:45",
+   "status_end_local": null,
+   "meals_provided": [
+    "dinner"
+   ]
+  },
+  {
+   "date": "2027-05-05",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "lunch"
+   ]
+  },
+  {
+   "date": "2027-05-06",
+   "status_start_local": null,
+   "status_end_local": "11:59",
+   "meals_provided": []
+  }
+ ]
+}
