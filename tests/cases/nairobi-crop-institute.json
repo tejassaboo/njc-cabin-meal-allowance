@@ -1,5 +1,5 @@
 {
- "scenario": "nairobi-overnight-heathrow",
+ "scenario": "nairobi-crop-institute",
  "note": "Overnight stop in London cuts the journey (decision 1575): blocks 410 and 505, both <= 540: economy. Meals KES: 02-07 none (dinner provided); 02-08 lunch+dinner 930500; 02-09 breakfast 203000; 02-10 breakfast+dinner 721000; 02-11 all 1133500; 02-12 lunch 412500 (ends 12:00, breakfast provided) = 3400500. Incidentals 6 x 362720 = 2176320.",
  "expected": {
   "segment_cabins": [

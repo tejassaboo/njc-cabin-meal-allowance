@@ -22,9 +22,9 @@ class NjcScenario(Enum):
 
     PARIS_ASSEMBLY = "paris-assembly"
     LONDON_SECONDMENT = "london-secondment"
-    NAIROBI_OVERNIGHT_HEATHROW = "nairobi-overnight-heathrow"
-    NAIROBI_DAYTIME_WAIT = "nairobi-daytime-wait"
-    TOKYO_NO_BUSINESS = "tokyo-no-business"
+    NAIROBI_CROP_INSTITUTE = "nairobi-crop-institute"
+    NAIROBI_WATER_WORKSHOP = "nairobi-water-workshop"
+    TOKYO_TRADE_TALKS = "tokyo-trade-talks"
     WASHINGTON_CONFERENCE = "washington-conference"
     HONOLULU_SCIENCE_MEETING = "honolulu-science-meeting"
     WHITEHORSE_SITE_REVIEW = "whitehorse-site-review"

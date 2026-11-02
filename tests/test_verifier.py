@@ -23,7 +23,7 @@ ORDER = [
     "meals-correct",
     "incidentals-correct",
 ]
-GOLD_TOKYO = case("tokyo-no-business")["expected"]
+GOLD_TOKYO = case("tokyo-trade-talks")["expected"]
 
 
 @pytest.mark.parametrize("scenario", SCENARIOS)
@@ -47,7 +47,7 @@ def test_each_broken_answer_fails_with_its_reason_code(scenario: str, index: int
 
 
 def test_a_failed_stage_leaves_later_stages_unchecked() -> None:
-    result = verdict("tokyo-no-business", {**GOLD_TOKYO, "segment_cabins": [{"segment_id": "S7", "cabin": "economy"}]})
+    result = verdict("tokyo-trade-talks", {**GOLD_TOKYO, "segment_cabins": [{"segment_id": "S7", "cabin": "economy"}]})
     states = {entry["id"]: entry["ok"] for entry in result["details"]["constraints"]}
     assert states["segments-match-journey"] is False
     assert all(states[identifier] is None for identifier in ORDER[2:])
@@ -59,9 +59,9 @@ def test_messages_name_the_rule_and_the_numbers() -> None:
     assert message.startswith("cabins-correct: S1 YYZ-YUL is business instead of economy: its continuous block is 540 min, not > 540")
     message = verdict("paris-assembly", {**paris, "longest_continuous_air_minutes": 480})["message"]
     assert "S1-S2 = 75 + 60 connection + 405 = 540 min" in message
-    message = verdict("nairobi-overnight-heathrow", {**case("nairobi-overnight-heathrow")["expected"], "longest_continuous_air_minutes": 915})["message"]
+    message = verdict("nairobi-crop-institute", {**case("nairobi-crop-institute")["expected"], "longest_continuous_air_minutes": 915})["message"]
     assert "S1 = 410 = 410 min; S2 = 505 = 505 min (cut at an overnight stop)" in message
-    message = verdict("tokyo-no-business", {**GOLD_TOKYO, "segment_cabins": [{"segment_id": "S1", "cabin": "business"}, {"segment_id": "S2", "cabin": "economy"}]})["message"]
+    message = verdict("tokyo-trade-talks", {**GOLD_TOKYO, "segment_cabins": [{"segment_id": "S1", "cabin": "business"}, {"segment_id": "S2", "cabin": "economy"}]})["message"]
     assert "950 min > 540 but it sells no business, so the highest class it sells, premium_economy" in message
     message = verdict("whitehorse-site-review", {**case("whitehorse-site-review")["expected"], "segment_cabins": [{"segment_id": "S1", "cabin": "business"}, {"segment_id": "S2", "cabin": "economy"}]})["message"]
     assert "Module 3" in message
@@ -74,19 +74,19 @@ def test_messages_name_the_rule_and_the_numbers() -> None:
 
 def test_a_message_counts_the_other_failures() -> None:
     changed = {**GOLD_TOKYO, "longest_continuous_air_minutes": 860, "currency": "CAD"}
-    result = verdict("tokyo-no-business", changed)
+    result = verdict("tokyo-trade-talks", changed)
     assert result["message"].startswith("longest-block-correct") and result["message"].endswith("(+1 more)")
 
 
 def test_a_wrong_answer_key_is_caught_before_the_submission() -> None:
     wrong_key = build_output({**GOLD_TOKYO, "currency": "CAD"}, NjcEntitlementOutput)
-    result = verifier.verify_task(TASK, arguments("tokyo-no-business"), build_output(GOLD_TOKYO, NjcEntitlementOutput), wrong_key, ".")
+    result = verifier.verify_task(TASK, arguments("tokyo-trade-talks"), build_output(GOLD_TOKYO, NjcEntitlementOutput), wrong_key, ".")
     assert result["valid"] is False and result["message"].startswith("reference-matches-oracle")
 
 
 def test_without_a_pinned_reference_the_oracle_still_decides() -> None:
-    assert verdict("tokyo-no-business", GOLD_TOKYO, pinned=False)["valid"] is True
-    assert verdict("tokyo-no-business", {**GOLD_TOKYO, "currency": "CAD"}, pinned=False)["valid"] is False
+    assert verdict("tokyo-trade-talks", GOLD_TOKYO, pinned=False)["valid"] is True
+    assert verdict("tokyo-trade-talks", {**GOLD_TOKYO, "currency": "CAD"}, pinned=False)["valid"] is False
 
 
 @pytest.mark.parametrize(
@@ -105,7 +105,7 @@ def test_without_a_pinned_reference_the_oracle_still_decides() -> None:
     ],
 )
 def test_incorrect_missing_and_inconsistent_answers(change: dict, reason: str) -> None:
-    result = verdict("tokyo-no-business", {**GOLD_TOKYO, **change})
+    result = verdict("tokyo-trade-talks", {**GOLD_TOKYO, **change})
     assert result["valid"] is False and result["message"].split(":")[0] == reason, result["message"]
 
 
@@ -150,11 +150,11 @@ def cyclic():
         ("nonsense", 7),
         ({"scenario": "../../etc/passwd"}, GOLD_TOKYO),
         ({"scenario": "no-such-trip"}, GOLD_TOKYO),
-        (arguments("tokyo-no-business"), None),
-        (arguments("tokyo-no-business"), {"currency": "JPY"}),
-        (arguments("tokyo-no-business"), {**GOLD_TOKYO, "segment_cabins": cyclic()}),
-        (arguments("tokyo-no-business"), {**GOLD_TOKYO, "segment_cabins": [{"segment_id": ["S1"], "cabin": "x"}]}),
-        (arguments("tokyo-no-business"), {**GOLD_TOKYO, "total_minor": "lots"}),
+        (arguments("tokyo-trade-talks"), None),
+        (arguments("tokyo-trade-talks"), {"currency": "JPY"}),
+        (arguments("tokyo-trade-talks"), {**GOLD_TOKYO, "segment_cabins": cyclic()}),
+        (arguments("tokyo-trade-talks"), {**GOLD_TOKYO, "segment_cabins": [{"segment_id": ["S1"], "cabin": "x"}]}),
+        (arguments("tokyo-trade-talks"), {**GOLD_TOKYO, "total_minor": "lots"}),
         (cyclic(), cyclic()),
     ],
 )
@@ -214,9 +214,9 @@ def test_a_stay_over_30_days_or_an_unknown_destination_is_a_verifier_error_not_a
 def test_an_unknown_task_or_tool_id_is_a_failed_verdict_not_an_exception() -> None:
     gold = build_output(GOLD_TOKYO, NjcEntitlementOutput)
     for result in (
-        verifier.verify_task("book-trip", arguments("tokyo-no-business"), gold, None, "."),
-        verifier.verify_task(None, arguments("tokyo-no-business"), gold, None, "."),
-        verifier.verify_input("search", arguments("tokyo-no-business")),
+        verifier.verify_task("book-trip", arguments("tokyo-trade-talks"), gold, None, "."),
+        verifier.verify_task(None, arguments("tokyo-trade-talks"), gold, None, "."),
+        verifier.verify_input("search", arguments("tokyo-trade-talks")),
         verifier.verify_input(["get_trip_request"], None),
         verifier.verify_output("search", None, None, "."),
         verifier.verify_output("get_allowance_rates", None, None, "."),

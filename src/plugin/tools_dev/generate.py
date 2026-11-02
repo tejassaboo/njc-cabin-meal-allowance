@@ -106,7 +106,7 @@ SCENARIOS = {
             ("2027-01-13", None, "18:00", ["lunch"]),
         ],
     },
-    "nairobi-overnight-heathrow": {
+    "nairobi-crop-institute": {
         "traveller_id": "N103",
         "request_text": (
             "Heading to the crop research institute in Nairobi. It's over fifteen hours of flying in total, and a colleague "
@@ -128,7 +128,7 @@ SCENARIOS = {
             ("2027-02-12", None, "12:00", ["breakfast"]),
         ],
     },
-    "nairobi-daytime-wait": {
+    "nairobi-water-workshop": {
         "traveller_id": "N104",
         "request_text": (
             "Water-monitoring workshop in Nairobi. My manager says the five-hour wait at Heathrow splits the journey into two "
@@ -149,7 +149,7 @@ SCENARIOS = {
             ("2027-03-05", None, "06:59", []),
         ],
     },
-    "tokyo-no-business": {
+    "tokyo-trade-talks": {
         "traveller_id": "N105",
         "request_text": (
             "Trade talks in Tokyo. Sakura Pacific doesn't sell business on the Toronto-Tokyo flight, so I guess the rules put "

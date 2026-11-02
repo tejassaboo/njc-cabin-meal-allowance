@@ -230,7 +230,7 @@ def test_a_date_line_trip_counts_each_listed_calendar_day_once() -> None:
     meals of each listed day by its own local clock."""
     from plugin.fixtures import scenario
 
-    facts = scenario("tokyo-no-business")
+    facts = scenario("tokyo-trade-talks")
     assert [day["date"] for day in facts["status_days"]] == ["2027-04-12", "2027-04-13", "2027-04-14", "2027-04-15"]
     assert (facts["outbound"][1]["depart_local"][:10], facts["outbound"][1]["arrive_local"][:10]) == ("2027-04-12", "2027-04-13")
     key = oracle(world(), facts)

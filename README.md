@@ -10,7 +10,7 @@ computes itself.
 ## Task
 
 - **Input:** `ScenarioInput` with a single field, `scenario`, which names one of eight bundled trips, for
-  example `{"scenario": "tokyo-no-business"}`.
+  example `{"scenario": "tokyo-trade-talks"}`.
 - **Tools:** the agent calls `get_trip_request`, then `get_allowance_rates`, then `submit`. This is three of
   the six hosted steps.
 - **Output:** `NjcEntitlementOutput`, with these fields:
@@ -30,9 +30,9 @@ Each scenario sets one trap:
 |---|---|---|
 | `paris-assembly` | 75 + 60 connection + 405 = exactly 540 continuous minutes, which is not more than nine hours. Status starts 12:01 and ends 17:59 | economy, economy; 540; EUR 20020 + 15704 = 35724 |
 | `london-secondment` | 65 + 60 + 416 = 541 only when the connection counts (481 in the air). Private accommodation lowers the incidental | business, business; 541; GBP 31340 + 8836 = 40176 |
-| `nairobi-overnight-heathrow` | Decision 1575: the overnight stop in London cuts the journey into 410 and 505 | economy, economy; 505; KES 3400500 + 2176320 = 5576820 |
-| `nairobi-daytime-wait` | A five-hour daytime wait is an ordinary connection: 400 + 300 + 505 = 1205 | business, business; 1205; KES 3197500 + 1813600 = 5011100 |
-| `tokyo-no-business` | The long-haul flight sells no business, so premium economy; the short hop in the same block is business | business, premium_economy; 950; JPY 4774000 + 2874880 = 7648880 |
+| `nairobi-crop-institute` | Decision 1575: the overnight stop in London cuts the journey into 410 and 505 | economy, economy; 505; KES 3400500 + 2176320 = 5576820 |
+| `nairobi-water-workshop` | A five-hour daytime wait is an ordinary connection: 400 + 300 + 505 = 1205 | business, business; 1205; KES 3197500 + 1813600 = 5011100 |
+| `tokyo-trade-talks` | The long-haul flight sells no business, so premium economy; the short hop in the same block is business | business, premium_economy; 950; JPY 4774000 + 2874880 = 7648880 |
 | `washington-conference` | Continental USA is Module 3, economy; Canadian amounts paid in USD; status ends 11:59 | economy; 100; USD 18310 + 7500 = 25810 |
 | `honolulu-science-meeting` | Hawaii is outside the continental USA, so Module 4 and business at 740 minutes | business, business; 740; USD 46285 + 12500 = 58785 |
 | `whitehorse-site-review` | Domestic, so economy; Yukon has its own Appendix C column | economy, economy; 510; CAD 36800 + 7500 = 44300 |
@@ -128,5 +128,5 @@ uv run python -m plugin.tools_dev.generate   # rewrite the fixtures; the tests t
 ```
 
 To run the agent, use `nanoagent plugin agent config=agent.yaml home=<run folder>` with `arguments` set to a
-JSON file such as `{"scenario": "tokyo-no-business"}`. It needs `OPENROUTER_API_KEY` in the environment, not
+JSON file such as `{"scenario": "tokyo-trade-talks"}`. It needs `OPENROUTER_API_KEY` in the environment, not
 in this repo.

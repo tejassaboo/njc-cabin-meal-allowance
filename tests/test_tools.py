@@ -69,7 +69,7 @@ def test_the_mcp_server_serves_every_tool() -> None:
         async with stdio_client(server) as (read, write), ClientSession(read, write) as client:
             await client.initialize()
             names = sorted(tool.name for tool in (await client.list_tools()).tools)
-            answer = await client.call_tool("get_trip_request", {"scenario": "tokyo-no-business"})
+            answer = await client.call_tool("get_trip_request", {"scenario": "tokyo-trade-talks"})
             row = await client.call_tool("get_allowance_rates", {"rate_location_id": "D-JP-TOKYO"})
             refused = await client.call_tool("get_allowance_rates", {"rate_location_id": "D-XX-ATLANTIS"})
             return names, answer, row, refused

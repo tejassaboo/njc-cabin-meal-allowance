@@ -98,9 +98,9 @@ def test_the_scenarios_cover_the_required_boundaries() -> None:
     assert longest["paris-assembly"] == 540 and longest["london-secondment"] == 541
     # 541 only with the connection: the in-air minutes alone are 481.
     assert sum(segment["in_air_minutes"] for segment in facts["london-secondment"]["outbound"]) == 481
-    assert facts["nairobi-overnight-heathrow"]["outbound"][0]["connection_after"]["overnight_stop"] is True
-    assert facts["nairobi-daytime-wait"]["outbound"][0]["connection_after"] == {"minutes": 300, "overnight_stop": False}
-    assert "business" not in facts["tokyo-no-business"]["outbound"][1]["cabins_sold"]
+    assert facts["nairobi-crop-institute"]["outbound"][0]["connection_after"]["overnight_stop"] is True
+    assert facts["nairobi-water-workshop"]["outbound"][0]["connection_after"] == {"minutes": 300, "overnight_stop": False}
+    assert "business" not in facts["tokyo-trade-talks"]["outbound"][1]["cabins_sold"]
     appendices = {world()["rates"][fact["destination"]["rate_location_id"]]["appendix"] for fact in facts.values()}
     assert appendices == {"appendix_c", "appendix_d"}
     bounds = {(day["status_start_local"], day["status_end_local"]) for fact in facts.values() for day in fact["status_days"]}

@@ -1,5 +1,5 @@
 {
- "scenario": "nairobi-daytime-wait",
+ "scenario": "nairobi-water-workshop",
  "note": "A five-hour daytime wait at Heathrow is an ordinary connection: block 400 + 300 + 505 = 1205 > 540: business on both. Meals KES: 03-01 dinner 518000 (start 18:00 counts); 03-02 lunch 412500; 03-03 all 1133500; 03-04 all 1133500; 03-05 none (ends 06:59) = 3197500. Incidentals 5 x 362720 = 1813600.",
  "expected": {
   "segment_cabins": [
