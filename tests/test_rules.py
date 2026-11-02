@@ -73,6 +73,33 @@ def test_an_overnight_stop_cuts_the_block(wait: int) -> None:
     assert cabins(scenario) == ["economy", "economy"]
 
 
+@pytest.mark.parametrize(("first", "second", "cabins_wanted"), [(540, 541, ["economy", "business"]), (541, 540, ["business", "economy"]), (540, 540, ["economy", "economy"])])
+def test_an_overnight_stop_with_a_block_exactly_on_the_threshold(first: int, second: int, cabins_wanted: list) -> None:
+    """Each block is judged on its own at exactly 540 / 541: the overnight stop between them changes neither."""
+    scenario = trip(journey((first, 600, True), (second, None, False)))
+    assert [block["minutes"] for block in continuous_blocks(scenario["outbound"])] == [first, second]
+    assert longest_continuous_minutes(scenario) == max(first, second)
+    assert cabins(scenario) == cabins_wanted
+
+
+@pytest.mark.parametrize(
+    ("first_sold", "second_sold", "cabins_wanted"),
+    [
+        (["economy", "premium_economy"], ALL, ["premium_economy", "business"]),
+        (ALL, ["economy", "premium_economy"], ["business", "premium_economy"]),
+        (["economy"], ALL, ["economy", "business"]),
+        (ALL, ["economy"], ["business", "economy"]),
+    ],
+)
+def test_business_not_sold_on_one_leg_of_a_qualifying_block(first_sold, second_sold, cabins_wanted) -> None:
+    """Whichever leg lacks business, only that leg drops to the highest class it sells; the other stays business."""
+    segments = journey((70, 90, False), (790, None, False))
+    segments[0]["cabins_sold"], segments[1]["cabins_sold"] = list(first_sold), list(second_sold)
+    scenario = trip(segments)
+    assert longest_continuous_minutes(scenario) == 950
+    assert cabins(scenario) == cabins_wanted
+
+
 def test_each_segment_takes_its_own_blocks_cabin() -> None:
     # A divided journey whose second part alone exceeds nine hours: only that part is business.
     scenario = trip(journey((300, 900, True), (420, 100, False), (60, None, False)))
@@ -151,6 +178,21 @@ def test_a_day_inside_status_and_a_same_day_round_trip() -> None:
     assert claimable_meals(day("12:01", "17:59")) == []
 
 
+@pytest.mark.parametrize(
+    ("start", "end", "meals"),
+    [
+        (None, "00:00", []),  # home at midnight: a part day with no meal, still one incidental (test below)
+        ("23:59", None, []),  # leaving at the last minute of the day
+        ("00:00", None, ["breakfast", "lunch", "dinner"]),  # status from the first minute of the day
+        ("00:00", "23:59", ["breakfast", "lunch", "dinner"]),
+        ("18:00", "18:00", ["dinner"]),  # a one-minute status window exactly at a meal time
+        ("07:00", "07:00", ["breakfast"]),
+    ],
+)
+def test_the_meal_clock_at_midnight_and_in_one_minute_windows(start, end, meals) -> None:
+    assert claimable_meals(day(start, end)) == meals
+
+
 def test_provided_meals_earn_nothing() -> None:
     assert claimable_meals(day(None, None, ["lunch"])) == ["breakfast", "dinner"]
     assert claimable_meals(day(None, None, ["breakfast", "lunch", "dinner"])) == []
@@ -174,6 +216,26 @@ def test_part_days_earn_a_whole_incidental_and_the_accommodation_picks_the_row()
     assert commercial["incidental_allowance_minor"] == 3 * 362720  # 32% of the meal total
     assert private["incidental_allowance_minor"] == 3 * 226700  # 20% of the meal total
     assert commercial["currency"] == private["currency"] == "KES"
+
+
+def test_a_midnight_arrival_day_earns_an_incidental_but_no_meal() -> None:
+    days = [day("06:00", None), day(None, "00:00")]
+    key = oracle(world(), full_trip("C-CANADA", "commercial", days))
+    assert key["meal_allowance_minor"] == 12320 and key["incidental_allowance_minor"] == 2 * 2500
+
+
+def test_a_date_line_trip_counts_each_listed_calendar_day_once() -> None:
+    """Tokyo: the long leg leaves on the 12th and lands on the 13th local time, so the traveller lives a short
+    12th and the fixture lists four calendar days. C6/C9 count the days as listed: four incidentals, and the
+    meals of each listed day by its own local clock."""
+    from plugin.fixtures import scenario
+
+    facts = scenario("tokyo-no-business")
+    assert [day["date"] for day in facts["status_days"]] == ["2027-04-12", "2027-04-13", "2027-04-14", "2027-04-15"]
+    assert (facts["outbound"][1]["depart_local"][:10], facts["outbound"][1]["arrive_local"][:10]) == ("2027-04-12", "2027-04-13")
+    key = oracle(world(), facts)
+    assert key["incidental_allowance_minor"] == 4 * 718720
+    assert [claimable_meals(day) for day in facts["status_days"]] == [["breakfast", "lunch"], ["dinner"], ["breakfast", "lunch"], ["breakfast", "lunch"]]
 
 
 def test_appendix_c_incidentals_do_not_depend_on_accommodation() -> None:

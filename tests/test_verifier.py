@@ -164,6 +164,53 @@ def test_the_verifier_never_raises(arguments_value, output_value) -> None:
     json.dumps(result)
 
 
+def mutated_data(tmp_path, change):
+    """A copy of the bundled data with one change to the paris-assembly scenario, for the verifier to read."""
+    import copy
+    import shutil
+
+    from helpers import DATA
+
+    shutil.copytree(DATA, tmp_path / "data")
+    facts = json.loads((DATA / "scenarios" / "paris-assembly.json").read_text(encoding="utf-8"))
+    facts = copy.deepcopy(facts)
+    change(facts)
+    (tmp_path / "data" / "scenarios" / "paris-assembly.json").write_text(json.dumps(facts), encoding="utf-8")
+    return tmp_path / "data"
+
+
+def thirty_one_days(facts):
+    facts["status_days"] = [
+        {"date": f"2027-01-{day:02d}", "status_start_local": "08:00" if day == 1 else None, "status_end_local": "20:00" if day == 31 else None, "meals_provided": []}
+        for day in range(1, 32)
+    ]
+
+
+def unknown_destination_row(facts):
+    facts["destination"]["rate_location_id"] = "D-XX-ATLANTIS"
+
+
+@pytest.mark.parametrize(("change", "needle"), [(thirty_one_days, "1 to 30 days"), (unknown_destination_row, "D-XX-ATLANTIS")])
+def test_a_stay_over_30_days_or_an_unknown_destination_is_a_verifier_error_not_an_exception(tmp_path, monkeypatch, change, needle) -> None:
+    """Long stays are out of scope (the day-31 reductions are conditional in v326), so the loader refuses such a
+    fixture; the verifier turns that, and a destination row the tables do not hold, into a failed verdict."""
+    import verifier.checks
+
+    monkeypatch.setattr(verifier.checks, "DATA", mutated_data(tmp_path, change))
+    gold = build_output(case("paris-assembly")["expected"], NjcEntitlementOutput)
+    for result in (
+        verifier.verify_task(TASK, arguments("paris-assembly"), gold, None, "."),
+        verifier.verify_output("compute_njc_entitlement", arguments("paris-assembly"), gold, "."),
+    ):
+        assert result["valid"] is False and result["score"] == 0.0
+        assert result["message"].startswith("verifier-error") and needle in result["message"], result["message"]
+        json.dumps(result)
+    # get_trip_request never reads the rate table, so only the loader's refusals reach it; either way no exception.
+    result = verifier.verify_output("get_trip_request", arguments("paris-assembly"), gold, ".")
+    assert result["valid"] is False
+    json.dumps(result)
+
+
 def test_an_unknown_task_or_tool_id_is_a_failed_verdict_not_an_exception() -> None:
     gold = build_output(GOLD_TOKYO, NjcEntitlementOutput)
     for result in (

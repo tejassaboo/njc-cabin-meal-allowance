@@ -55,6 +55,9 @@ def test_every_policy_fact_reaches_the_agent_in_a_typed_field() -> None:
     assert trip["outbound"] == list[Segment] and trip["status_days"] == list[StatusDay]
     assert types_of(Destination)["in_canada_or_continental_usa"] is bool
     assert types_of(Destination)["rate_location_id"] is str
+    geography = {name: text for name, _, text in annotated_fields(Destination)}["in_canada_or_continental_usa"]
+    # Appendix C draws the line: Alaska is continental USA (Yukon rates), Hawaii is not (Appendix D).
+    assert "Alaska" in geography and "Hawaii" in geography
     segment = types_of(Segment)
     assert segment["in_air_minutes"] is int and segment["cabins_sold"] == list[NjcCabin]
     assert segment["connection_after"] == (Connection | None)

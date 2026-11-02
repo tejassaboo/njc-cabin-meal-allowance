@@ -147,7 +147,7 @@ def check_segments(segments):
 def check_days(days):
     require(isinstance(days, list) and 1 <= len(days) <= MAX_STATUS_DAYS, f"status_days must list 1 to {MAX_STATUS_DAYS} days")
     previous = None
-    for day in days:
+    for index, day in enumerate(days):
         require(isinstance(day, dict), "a status day must be an object")
         number = day_number(day.get("date"))
         require(previous is None or number == previous + 1, f"{day['date']}: status days must be consecutive")
@@ -155,6 +155,9 @@ def check_days(days):
         start, end = day.get("status_start_local", "missing"), day.get("status_end_local", "missing")
         bounds = [clock_minutes(value) for value in (start, end) if value is not None]
         require(len(bounds) < 2 or bounds[0] <= bounds[1], f"{day['date']}: status ends before it starts")
+        # Status begins on the first listed day and ends on the last: a null bound anywhere else would be ambiguous.
+        require((start is None) == (index > 0), f"{day['date']}: only the first status day has a status_start_local")
+        require((end is None) == (index < len(days) - 1), f"{day['date']}: only the last status day has a status_end_local")
         provided = day.get("meals_provided")
         require(isinstance(provided, list) and all(meal in MEALS for meal in provided) and len(set(provided)) == len(provided),
                 f"{day['date']}: meals_provided must hold distinct meals")

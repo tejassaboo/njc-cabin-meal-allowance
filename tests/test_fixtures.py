@@ -22,7 +22,12 @@ from plugin.world import load_world
 SOURCE_ROWS = {
     "C-CANADA": ("CAD", 2995, 3055, 6270, 12320, 2500, 2500),
     "C-YUKON": ("CAD", 2735, 3470, 8130, 14335, 2500, 2500),
+    "C-NWT": ("CAD", 2930, 3475, 7415, 13820, 2500, 2500),
+    "C-NUNAVUT": ("CAD", 3555, 4220, 10190, 17965, 2500, 2500),
     "C-USA": ("USD", 2995, 3055, 6270, 12320, 2500, 2500),
+    "C-ALASKA": ("USD", 2735, 3470, 8130, 14335, 2500, 2500),  # "Alaska follows the Yukon rates", in US funds
+    "D-DE-BERLIN": ("EUR", 2865, 4435, 6045, 13345, 4270, 2669),
+    "D-AU-SYDNEY": ("AUD", 4480, 8500, 11615, 24595, 7870, 4919),
     "D-FR-PARIS": ("EUR", 2490, 4520, 5260, 12270, 3926, 2454),
     "D-GB-LONDON": ("GBP", 2335, 4085, 4625, 11045, 3534, 2209),
     "D-KE-NAIROBI": ("KES", 203000, 412500, 518000, 1133500, 362720, 226700),
@@ -69,8 +74,39 @@ def test_the_handbook_pins_its_source_and_states_the_toy_rules() -> None:
         "07:00",
         "12:00",
         "18:00",
+        "Alaska counts as continental USA",
+        "rule 4 allows any lower class",
+        "the date line",
     ):
         assert needle in handbook, needle
+
+
+def test_appendix_c_and_d_rows_are_typed_as_the_source_files_them() -> None:
+    """Appendix C: Canada, the territories and the USA, Alaska included; Appendix D: everything else, Hawaii included."""
+    appendices = {location_id: location["appendix"] for location_id, location in world()["rates"].items()}
+    assert all(appendix == ("appendix_c" if location_id.startswith("C-") else "appendix_d") for location_id, appendix in appendices.items())
+    assert appendices["C-ALASKA"] == "appendix_c" and appendices["D-US-HAWAII"] == "appendix_d"
+    assert world()["rates"]["C-ALASKA"]["rows"][0]["meal_total_minor"] == world()["rates"]["C-YUKON"]["rows"][0]["meal_total_minor"]
+    assert world()["rates"]["D-US-HAWAII"]["rows"][0] == world()["rates"]["C-USA"]["rows"][0]
+
+
+@pytest.mark.parametrize(("date", "valid"), [("2028-02-29", True), ("2000-02-29", True), ("2027-02-29", False), ("2100-02-29", False), ("2027-04-31", False)])
+def test_leap_days(date: str, valid: bool) -> None:
+    from plugin.world import day_number
+
+    if valid:
+        day_number(date)
+    else:
+        with pytest.raises(ValueError, match="calendar date"):
+            day_number(date)
+
+
+def test_consecutive_days_roll_over_a_month_and_a_year() -> None:
+    from plugin.world import day_number
+
+    assert day_number("2027-01-01") - day_number("2026-12-31") == 1
+    assert day_number("2028-03-01") - day_number("2028-02-29") == 1
+    assert day_number("2027-03-01") - day_number("2027-02-28") == 1
 
 
 def test_the_generator_reproduces_the_committed_fixtures() -> None:
@@ -146,6 +182,10 @@ def set_path(*keys_and_value):
         (set_path("status_days", 1, "date", "2026-12-09"), "consecutive"),
         (set_path("status_days", 0, "status_start_local", "24:00"), "HH:MM"),
         (set_path("status_days", 3, "status_start_local", "18:00"), "ends before it starts"),
+        (set_path("status_days", 0, "status_start_local", None), "only the first status day has a status_start_local"),
+        (set_path("status_days", 1, "status_start_local", "09:00"), "only the first status day has a status_start_local"),
+        (set_path("status_days", 3, "status_end_local", None), "only the last status day has a status_end_local"),
+        (set_path("status_days", 1, "status_end_local", "22:00"), "only the last status day has a status_end_local"),
         (set_path("status_days", 0, "meals_provided", ["dinner", "dinner"]), "distinct"),
         (set_path("status_days", 0, "date", "2026-02-30"), "calendar date"),
         (set_path("status_days", [{"date": f"2027-01-{day:02d}", "status_start_local": None, "status_end_local": None, "meals_provided": []} for day in range(1, 32)]), "1 to 30"),

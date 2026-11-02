@@ -90,7 +90,9 @@ How it scores:
 - the corrected §11 sanity row: 360 + 90 + 420 gives 870 continuous minutes and business; with an overnight stop instead, economy;
 - uniqueness: any other cabin, currency, or amount or minute count one off fails;
 - oracle == the hand-written `tests/cases/<scenario>.json` for every scenario;
-- `rules.py` and `world.py` identity, handbook == `instructions`, the rates against the source's printed amounts, the generator, UTC times, and the loader refusing inconsistent fixtures;
+- `rules.py` and `world.py` identity, handbook == `instructions`, every rate row against the source's printed amounts (Alaska as Appendix C on the Yukon amounts, Hawaii as Appendix D on the USA amounts), the generator, UTC times, leap days and year rollover, and the loader refusing inconsistent fixtures (a status window that is open at the wrong end included);
+- the verifier returning a `verifier-error` verdict, never an exception, for a fixture it cannot trust: a stay over 30 days or a destination row the tables do not hold;
+- edges: an overnight stop beside a block of exactly 540 or 541 minutes, business missing from either leg of a qualifying block, status windows touching midnight or lasting one minute, and the Tokyo trip's calendar days across the date line;
 - structured input and output (`tests/test_contract.py`), and `request_text` as flavour only;
 - a real MCP server round trip and tool-output sizes under about 1k tokens;
 - a scripted, no-LLM end-to-end run per scenario: an agent written from the handbook alone follows the step plan, its gold answer passes, and broken answers fail with the expected reason code.

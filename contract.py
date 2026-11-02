@@ -88,7 +88,9 @@ class Destination(Output):
     city: Annotated[str, "Destination city (descriptive only)"]
     country: Annotated[str, "ISO 3166-1 alpha-2 country code of the destination, e.g. KE"]
     in_canada_or_continental_usa: Annotated[
-        bool, "True when the destination is in Canada or the 48 contiguous US states and DC; false elsewhere, Hawaii included"
+        bool,
+        "True when the destination is in Canada or the continental USA (the 48 contiguous states, DC and Alaska, as "
+        "Appendix C draws it); false elsewhere, Hawaii and the other US locations outside the continental USA included",
     ]
     rate_location_id: Annotated[str, "The allowance-table row to use, e.g. D-KE-NAIROBI; pass it to get_allowance_rates"]
 
