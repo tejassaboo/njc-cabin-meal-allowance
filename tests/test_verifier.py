@@ -254,3 +254,11 @@ def test_the_reference_tool_output_is_checked_against_the_oracle() -> None:
     bad = verifier.verify_output("compute_njc_entitlement", arguments("paris-assembly"), reference("london-secondment"), ".")
     assert good["valid"] is True and bad["valid"] is False
     assert verifier.verify_input("compute_njc_entitlement", build_output({"scenario": "paris-assembly"}, ScenarioInput))["valid"] is True
+
+
+@pytest.mark.parametrize("raw", [{**GOLD_TOKYO, "total_minor": 7648880.0}, {**GOLD_TOKYO, "meal_allowance_minor": "4774000"}])
+def test_a_plain_output_with_a_non_int_amount_is_a_verifier_error_not_a_pass(raw) -> None:
+    """The host builds the output first, so this never happens in a run; a host that skipped it still gets a verdict."""
+    result = verifier.verify_task(TASK, arguments("tokyo-trade-talks"), raw, None, ".")
+    assert result["valid"] is False and result["message"].startswith("verifier-error")
+    json.dumps(result)

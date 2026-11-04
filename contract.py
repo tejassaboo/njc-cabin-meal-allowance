@@ -68,7 +68,7 @@ class Currency(Enum):
     JPY = "JPY"
     KES = "KES"
     AUD = "AUD"
-    MXN = "MXN"
+    MXN = "MXN"  # no bundled row pays pesos (Mexico City is paid in CAD): a distractor the agent may wrongly pick
 
 
 @dataclass

@@ -18,12 +18,17 @@ from .checks import fixtures, plain, result, scenario_id_of
 from .rules import (
     BUSINESS_OVER,
     MEAL_CLOCK,
+    block_minutes_by_segment,
     continuous_blocks,
     is_international,
     meal_lines,
     oracle,
     rate_row,
 )
+from .world import is_int
+
+# build_output guarantees these are ints; the guard keeps a verdict, not an exception, for a host that skips it.
+INT_FIELDS = ("longest_continuous_air_minutes", "meal_allowance_minor", "incidental_allowance_minor", "total_minor")
 
 TEXT = {
     "reference-matches-oracle": "The pinned answer key equals the verifier's own oracle",
@@ -58,6 +63,8 @@ def verify_task(arguments, output, reference, workspace):
     given = plain(output)
     if not isinstance(given, dict) or not isinstance(given.get("segment_cabins"), list):
         raise TypeError("the output is not an entitlement")
+    if not all(is_int(given.get(name)) for name in INT_FIELDS):
+        raise TypeError("the output's minutes and amounts are not all ints")
     return judge(world, scenario, key, pinned, given)
 
 
@@ -183,7 +190,7 @@ def longest_problem(scenario, key, given):
     return wanted, actual, f"{actual} min instead of {wanted}: blocks {block_text(scenario)}; ordinary connections count, only an overnight stop cuts"
 
 
-def cabin_reason(scenario, segment, block_minutes, cabin):
+def cabin_reason(scenario, block_minutes, cabin):
     if not is_international(scenario):
         return "the destination is in Canada or the continental USA (Module 3), so economy"
     if block_minutes <= BUSINESS_OVER:
@@ -195,11 +202,11 @@ def cabin_reason(scenario, segment, block_minutes, cabin):
 
 def cabins_problem(scenario, key, given):
     wanted, cabins = cabin_map(key), cabin_map(given)
-    blocks = {segment_id: block["minutes"] for block in continuous_blocks(scenario["outbound"]) for segment_id in block["segment_ids"]}
+    blocks = block_minutes_by_segment(scenario["outbound"])
     for segment in scenario["outbound"]:
         segment_id = segment["segment_id"]
         if cabins[segment_id] != wanted[segment_id]:
-            why = cabin_reason(scenario, segment, blocks[segment_id], wanted[segment_id])
+            why = cabin_reason(scenario, blocks[segment_id], wanted[segment_id])
             return wanted, cabins, (
                 f"{segment_id} {segment['origin']}-{segment['destination']} is {cabins[segment_id]} instead of {wanted[segment_id]}: {why}"
             )

@@ -66,8 +66,8 @@ Each scenario sets one trap:
 
 ## Verifier
 
-`verifier/entitlement.py` reads the fixtures through `Path(__file__)`, computes the oracle with the shared
-`rules.py`, and checks the submission in four ordered stages. Each check has a stable reason code. The
+`verifier/entitlement.py` reads the fixtures through `Path(__file__)` (`verifier/checks.py`), computes the oracle
+with the shared `rules.py`, and checks the submission in four ordered stages. Each check has a stable reason code. The
 message names the first failing check with the rule and the numbers (for example "S1 YYZ-YUL is business
 instead of economy: its continuous block is 540 min, not > 540, so economy"), and later stages are skipped.
 
