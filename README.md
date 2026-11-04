@@ -1,5 +1,7 @@
 # NJC Cabin Meal Allowance
 
+**No affiliation with the National Joint Council (NJC) or the Government of Canada.**
+
 A `nanoagent.plugin/v0001` plugin. An agent works out one Canadian public-service trip's entitlement under a
 toy handbook paraphrased from the National Joint Council Travel Directive (version 326, effective
 2025-10-01, with Appendix C and D rates effective 2026-10-01). It reads the trip and the destination's
