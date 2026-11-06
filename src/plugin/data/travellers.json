@@ -38,5 +38,25 @@
   "traveller_id": "N108",
   "name": "Louise Gagnon",
   "role": "Northern infrastructure engineer"
+ },
+ "N109": {
+  "traveller_id": "N109",
+  "name": "Hana Whitford",
+  "role": "Marine ecologist"
+ },
+ "N110": {
+  "traveller_id": "N110",
+  "name": "Tomasz Nowak",
+  "role": "Metrology scientist"
+ },
+ "N111": {
+  "traveller_id": "N111",
+  "name": "Rafael Dubois",
+  "role": "Port logistics planner"
+ },
+ "N112": {
+  "traveller_id": "N112",
+  "name": "Ana Lucía Ferreira",
+  "role": "Demographer"
  }
 }

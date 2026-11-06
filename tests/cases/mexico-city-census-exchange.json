@@ -1,0 +1,74 @@
+{
+ "scenario": "mexico-city-census-exchange",
+ "note": "One segment of 345 min <= 540: economy. Appendix D row D-MX-MEXICO-CITY is paid in Canadian dollars, not pesos. Private non-commercial accommodation: incidental 3654. Meals CAD: 11-16 (starts 18:01, so no dinner) none; 11-17 (dinner provided) breakfast+lunch 9860; 11-18 (lunch provided) breakfast+dinner 11725; 11-19 all 18270; 11-20 (ends 12:01, breakfast provided) lunch 6545 = 46400. Incidentals 5 x 3654 = 18270.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "economy"
+   }
+  ],
+  "longest_continuous_air_minutes": 345,
+  "currency": "CAD",
+  "meal_allowance_minor": 46400,
+  "incidental_allowance_minor": 18270,
+  "total_minor": 64670
+ },
+ "broken": [
+  {
+   "why": "paid in pesos as the traveller asks",
+   "change": {
+    "currency": "MXN"
+   },
+   "reason": "currency-correct"
+  },
+  {
+   "why": "commercial-row incidentals as the traveller asks",
+   "change": {
+    "meal_allowance_minor": 46400,
+    "incidental_allowance_minor": 29230,
+    "total_minor": 75630
+   },
+   "reason": "incidentals-correct"
+  },
+  {
+   "why": "dinner claimed on the 16th although status starts at 18:01",
+   "change": {
+    "meal_allowance_minor": 54810,
+    "incidental_allowance_minor": 18270,
+    "total_minor": 73080
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "lunch dropped on the 20th although status ends at 12:01",
+   "change": {
+    "meal_allowance_minor": 39855,
+    "incidental_allowance_minor": 18270,
+    "total_minor": 58125
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "incidentals entered as a deduction",
+   "change": {
+    "meal_allowance_minor": 46400,
+    "incidental_allowance_minor": -18270,
+    "total_minor": 28130
+   },
+   "reason": "amounts-non-negative"
+  },
+  {
+   "why": "business on a 345-minute flight",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  }
+ ]
+}

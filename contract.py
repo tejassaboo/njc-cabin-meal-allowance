@@ -28,6 +28,10 @@ class NjcScenario(Enum):
     WASHINGTON_CONFERENCE = "washington-conference"
     HONOLULU_SCIENCE_MEETING = "honolulu-science-meeting"
     WHITEHORSE_SITE_REVIEW = "whitehorse-site-review"
+    SYDNEY_REEF_SYMPOSIUM = "sydney-reef-symposium"
+    BERLIN_STANDARDS_MEETING = "berlin-standards-meeting"
+    ANCHORAGE_PORT_STUDY = "anchorage-port-study"
+    MEXICO_CITY_CENSUS_EXCHANGE = "mexico-city-census-exchange"
 
 
 class NjcCabin(Enum):

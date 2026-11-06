@@ -64,5 +64,29 @@
   "city": "Honolulu",
   "country": "US",
   "tz": "Pacific/Honolulu"
+ },
+ "ANC": {
+  "code": "ANC",
+  "city": "Anchorage",
+  "country": "US",
+  "tz": "America/Anchorage"
+ },
+ "SYD": {
+  "code": "SYD",
+  "city": "Sydney Kingsford Smith",
+  "country": "AU",
+  "tz": "Australia/Sydney"
+ },
+ "BER": {
+  "code": "BER",
+  "city": "Berlin Brandenburg",
+  "country": "DE",
+  "tz": "Europe/Berlin"
+ },
+ "MEX": {
+  "code": "MEX",
+  "city": "Mexico City",
+  "country": "MX",
+  "tz": "America/Mexico_City"
  }
 }

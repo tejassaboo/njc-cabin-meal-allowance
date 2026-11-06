@@ -1,0 +1,86 @@
+{
+ "scenario": "berlin-standards-meeting",
+ "request_text": "Standards meeting in Berlin. The Berlin flight is seven hours and the hop to Montreal under an hour, so nowhere near nine hours of flying, and Linden Air only sells economy on the long leg anyway, so economy throughout I expect. I left home at 07:01 on the 18th, which is breakfast time in anyone's book, and I'm home at 07:00 sharp on the 22nd, too early to count anything.",
+ "traveller_id": "N110",
+ "destination": {
+  "city": "Berlin",
+  "country": "DE",
+  "in_canada_or_continental_usa": false,
+  "rate_location_id": "D-DE-BERLIN"
+ },
+ "accommodation": "commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "MA 420",
+   "origin": "YOW",
+   "destination": "YUL",
+   "depart_local": "2027-10-18T15:35",
+   "arrive_local": "2027-10-18T16:30",
+   "depart_utc": "2027-10-18T19:35Z",
+   "arrive_utc": "2027-10-18T20:30Z",
+   "in_air_minutes": 55,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 65,
+    "overnight_stop": false
+   }
+  },
+  {
+   "segment_id": "S2",
+   "flight": "LN 702",
+   "origin": "YUL",
+   "destination": "BER",
+   "depart_local": "2027-10-18T17:35",
+   "arrive_local": "2027-10-19T06:36",
+   "depart_utc": "2027-10-18T21:35Z",
+   "arrive_utc": "2027-10-19T04:36Z",
+   "in_air_minutes": 421,
+   "cabins_sold": [
+    "economy"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2027-10-18",
+   "status_start_local": "07:01",
+   "status_end_local": null,
+   "meals_provided": [
+    "dinner"
+   ]
+  },
+  {
+   "date": "2027-10-19",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "breakfast"
+   ]
+  },
+  {
+   "date": "2027-10-20",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "lunch"
+   ]
+  },
+  {
+   "date": "2027-10-21",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-10-22",
+   "status_start_local": null,
+   "status_end_local": "07:00",
+   "meals_provided": []
+  }
+ ]
+}

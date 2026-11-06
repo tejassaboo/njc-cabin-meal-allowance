@@ -1,0 +1,117 @@
+{
+ "scenario": "sydney-reef-symposium",
+ "request_text": "Reef symposium in Sydney. The department booked me a night in Vancouver on the way out precisely so the journey is split into shorter parts, and I'm told that decision 1575 then means economy throughout; I'd rather you double-check. I was in the air for most of the 3rd, so I don't expect anything for that day. I'm home at 18:01 on the 6th, just too late for dinner I suppose.",
+ "traveller_id": "N109",
+ "destination": {
+  "city": "Sydney",
+  "country": "AU",
+  "in_canada_or_continental_usa": false,
+  "rate_location_id": "D-AU-SYDNEY"
+ },
+ "accommodation": "commercial",
+ "outbound": [
+  {
+   "segment_id": "S1",
+   "flight": "MA 115",
+   "origin": "YYZ",
+   "destination": "YVR",
+   "depart_local": "2027-09-01T17:30",
+   "arrive_local": "2027-09-01T19:30",
+   "depart_utc": "2027-09-01T21:30Z",
+   "arrive_utc": "2027-09-02T02:30Z",
+   "in_air_minutes": 300,
+   "cabins_sold": [
+    "economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 840,
+    "overnight_stop": true
+   }
+  },
+  {
+   "segment_id": "S2",
+   "flight": "SP 820",
+   "origin": "YVR",
+   "destination": "HNL",
+   "depart_local": "2027-09-02T09:30",
+   "arrive_local": "2027-09-02T12:30",
+   "depart_utc": "2027-09-02T16:30Z",
+   "arrive_utc": "2027-09-02T22:30Z",
+   "in_air_minutes": 360,
+   "cabins_sold": [
+    "economy",
+    "premium_economy",
+    "business"
+   ],
+   "connection_after": {
+    "minutes": 95,
+    "overnight_stop": false
+   }
+  },
+  {
+   "segment_id": "S3",
+   "flight": "SP 61",
+   "origin": "HNL",
+   "destination": "SYD",
+   "depart_local": "2027-09-02T14:05",
+   "arrive_local": "2027-09-03T20:05",
+   "depart_utc": "2027-09-03T00:05Z",
+   "arrive_utc": "2027-09-03T10:05Z",
+   "in_air_minutes": 600,
+   "cabins_sold": [
+    "economy",
+    "premium_economy",
+    "business"
+   ],
+   "connection_after": null
+  }
+ ],
+ "status_days": [
+  {
+   "date": "2027-09-01",
+   "status_start_local": "15:00",
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-09-02",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "breakfast"
+   ]
+  },
+  {
+   "date": "2027-09-03",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "breakfast",
+    "lunch"
+   ]
+  },
+  {
+   "date": "2027-09-04",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": []
+  },
+  {
+   "date": "2027-09-05",
+   "status_start_local": null,
+   "status_end_local": null,
+   "meals_provided": [
+    "dinner"
+   ]
+  },
+  {
+   "date": "2027-09-06",
+   "status_start_local": null,
+   "status_end_local": "18:01",
+   "meals_provided": [
+    "breakfast"
+   ]
+  }
+ ]
+}

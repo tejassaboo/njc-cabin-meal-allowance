@@ -1,0 +1,102 @@
+{
+ "scenario": "sydney-reef-symposium",
+ "note": "Decision 1575 twin of nairobi-crop-institute: the overnight stop in Vancouver cuts the journey into S1 = 300 and S2-S3 = 360 + 95 connection + 600 = 1055. S1 is economy (300 <= 540); S2 and S3 are business (1055 > 540, both sell it). Commercial row, AUD: 09-01 (start 15:00) dinner 11615; 09-02 (breakfast provided) lunch+dinner 20115; 09-03 (breakfast, lunch provided on board, a full listed day) dinner 11615; 09-04 all 24595; 09-05 (dinner provided) breakfast+lunch 12980; 09-06 (ends 18:01, breakfast provided) lunch+dinner 20115 = 101035. Incidentals 6 x 7870 = 47220.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "economy"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "business"
+   },
+   {
+    "segment_id": "S3",
+    "cabin": "business"
+   }
+  ],
+  "longest_continuous_air_minutes": 1055,
+  "currency": "AUD",
+  "meal_allowance_minor": 101035,
+  "incidental_allowance_minor": 47220,
+  "total_minor": 148255
+ },
+ "broken": [
+  {
+   "why": "decision 1575 read as economy throughout, although the block after the stop is 1055 min",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S3",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "overnight stop ignored: one block of 300 + 840 + 360 + 95 + 600 = 2195, business on S1 too",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S3",
+      "cabin": "business"
+     }
+    ],
+    "longest_continuous_air_minutes": 2195
+   },
+   "reason": "longest-block-correct"
+  },
+  {
+   "why": "the 3rd dropped as a day lost to the date line: no dinner and no incidental",
+   "change": {
+    "meal_allowance_minor": 89420,
+    "incidental_allowance_minor": 39350,
+    "total_minor": 128770
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "dinner dropped on the 6th although status ends at 18:01",
+   "change": {
+    "meal_allowance_minor": 89420,
+    "incidental_allowance_minor": 47220,
+    "total_minor": 136640
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "S3 left out of segment_cabins",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "segments-match-journey"
+  }
+ ]
+}

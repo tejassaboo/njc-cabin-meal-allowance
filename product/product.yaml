@@ -1,9 +1,9 @@
 _ > nanoagent.plugin.v0001.ProductConfig:
 tagline: "Nine hours, not a minute less: cabin and per-diem entitlements under Canada's NJC Travel Directive"
-summary: "An agent works out a Canadian public servant's travel entitlement under a toy handbook paraphrased from the NJC Travel Directive (v326, rates effective 2026-10-01): the cabin on each outbound segment by continuous air time (more than 540 minutes, connections included, cut only by an overnight stop, decision 1575), the lower class when business is not sold, and the Appendix C or D meal and incidental allowances in the right currency. A deterministic verifier checks every number. Ask it to run a scenario: paris-assembly, london-secondment, nairobi-crop-institute, nairobi-water-workshop, tokyo-trade-talks, washington-conference, honolulu-science-meeting or whitehorse-site-review."
+summary: "An agent works out a Canadian public servant's travel entitlement under a toy handbook paraphrased from the NJC Travel Directive (v326, rates effective 2026-10-01): the cabin on each outbound segment by continuous air time (more than 540 minutes, connections included, cut only by an overnight stop, decision 1575), the lower class when business is not sold, and the Appendix C or D meal and incidental allowances in the right currency. A deterministic verifier checks every number and gives partial credit per decision. Ask it to run a scenario: paris-assembly, london-secondment, nairobi-crop-institute, nairobi-water-workshop, tokyo-trade-talks, washington-conference, honolulu-science-meeting, whitehorse-site-review, sydney-reef-symposium, berlin-standards-meeting, anchorage-port-study or mexico-city-census-exchange."
 highlights:
   - "One correct entitlement per scenario, checked by a pure-Python oracle with no LLM judge"
-  - "Every trap is a real policy edge: 540 vs 541 minutes, an overnight stop vs a five-hour wait, Hawaii as international travel, Yukon's own rates"
+  - "Every trap is a real policy edge: 540 vs 541 minutes, an overnight stop that does or does not shorten the journey enough, a flight that sells no business, Hawaii and Alaska on opposite sides of the line, Mexico paid in Canadian dollars"
   - "Real Appendix C and D amounts in seven currencies, pinned to the 2026-10-01 quarter, fully offline"
 steps:
   - "Name a scenario, for example tokyo-trade-talks"

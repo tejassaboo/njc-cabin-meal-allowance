@@ -1,0 +1,97 @@
+{
+ "scenario": "berlin-standards-meeting",
+ "note": "YOW-YUL 55 + 65 connection + YUL-BER 421 = 541 > 540 (476 in the air): the block qualifies. S1 sells business, so business; S2 sells only economy, so economy (C4). Commercial row, EUR: 10-18 (starts 07:01, so no breakfast; dinner provided) lunch 4435; 10-19 (breakfast provided) lunch+dinner 10480; 10-20 (lunch provided) breakfast+dinner 8910; 10-21 all 13345; 10-22 (ends 07:00) breakfast 2865 = 40035. Incidentals 5 x 4270 = 21350.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "business"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "economy"
+   }
+  ],
+  "longest_continuous_air_minutes": 541,
+  "currency": "EUR",
+  "meal_allowance_minor": 40035,
+  "incidental_allowance_minor": 21350,
+  "total_minor": 61385
+ },
+ "broken": [
+  {
+   "why": "economy throughout because the long leg sells no business",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "business on S2, which sells only economy",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-are-sold"
+  },
+  {
+   "why": "connection left out: 476 in-air minutes, so economy",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "economy"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "economy"
+     }
+    ],
+    "longest_continuous_air_minutes": 476
+   },
+   "reason": "longest-block-correct"
+  },
+  {
+   "why": "breakfast claimed on the 18th although status starts at 07:01",
+   "change": {
+    "meal_allowance_minor": 42900,
+    "incidental_allowance_minor": 21350,
+    "total_minor": 64250
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "breakfast dropped on the 22nd although status ends at 07:00",
+   "change": {
+    "meal_allowance_minor": 37170,
+    "incidental_allowance_minor": 21350,
+    "total_minor": 58520
+   },
+   "reason": "meals-correct"
+  },
+  {
+   "why": "total one off the sum",
+   "change": {
+    "total_minor": 61384
+   },
+   "reason": "total-is-sum"
+  }
+ ]
+}

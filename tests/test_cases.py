@@ -11,7 +11,7 @@ from contract import TOOLS, Currency, NjcCabin, NjcEntitlementOutput, Tool
 from plugin import get_allowance_rates, get_trip_request
 from plugin.fixtures import scenario as load_scenario
 from plugin.fixtures import world
-from plugin.rules import oracle
+from plugin.rules import continuous_blocks, oracle
 
 IMPLEMENTATIONS = {Tool.GET_TRIP_REQUEST: get_trip_request, Tool.GET_ALLOWANCE_RATES: get_allowance_rates}
 MAX_TOOL_CALLS = 4  # plus submit, within the hosted 6 steps whose last may not call tools
@@ -28,7 +28,7 @@ def call(tool, arguments):
 
 def test_every_scenario_has_a_case() -> None:
     assert sorted(SCENARIOS) == sorted(path.stem for path in (ROOT / "tests" / "cases").glob("*.json"))
-    assert 6 <= len(SCENARIOS) <= 8
+    assert len(SCENARIOS) == 12
 
 
 @pytest.mark.parametrize("scenario", SCENARIOS)
@@ -91,6 +91,16 @@ def test_request_text_is_flavour_only(scenario: str) -> None:
     assert run(scenario, muted)[1] == run(scenario, call)[1]
 
 
+def test_the_broken_variants_lead_with_every_reason_code_that_can_lead() -> None:
+    """Every reason code heads some bundled broken variant's message, except reference-matches-oracle (a wrong
+    pinned key, tested in test_verifier.py) and total-correct, which can never fail first: when the meals and
+    the incidentals are right and total-is-sum holds, the total is right too."""
+    from verifier.entitlement import TEXT
+
+    leading = {broken["reason"] for scenario in SCENARIOS for broken in case(scenario)["broken"]}
+    assert leading == set(TEXT) - {"reference-matches-oracle", "total-correct"}
+
+
 def test_the_scenarios_cover_the_required_boundaries() -> None:
     """The brief's boundary list, checked against the fixtures themselves."""
     facts = {scenario: load_scenario(scenario) for scenario in SCENARIOS}
@@ -101,11 +111,26 @@ def test_the_scenarios_cover_the_required_boundaries() -> None:
     assert facts["nairobi-crop-institute"]["outbound"][0]["connection_after"]["overnight_stop"] is True
     assert facts["nairobi-water-workshop"]["outbound"][0]["connection_after"] == {"minutes": 300, "overnight_stop": False}
     assert "business" not in facts["tokyo-trade-talks"]["outbound"][1]["cabins_sold"]
+    # Decision 1575 both ways: Nairobi's overnight stop leaves 505 (economy); Sydney's leaves 1055 (business on S2-S3).
+    sydney = facts["sydney-reef-symposium"]["outbound"]
+    assert sydney[0]["connection_after"]["overnight_stop"] is True and len(sydney) == 3
+    assert [block["minutes"] for block in continuous_blocks(sydney)] == [300, 1055]
+    # Berlin: 541 only with the connection (476 in the air); the qualifying long leg sells only economy.
+    berlin = facts["berlin-standards-meeting"]["outbound"]
+    assert longest["berlin-standards-meeting"] == 541 and sum(segment["in_air_minutes"] for segment in berlin) == 476
+    assert berlin[1]["cabins_sold"] == ["economy"] and "business" in berlin[0]["cabins_sold"]
+    # Alaska: continental USA (Module 3) on a 620-minute block, Appendix C on the Yukon amounts; Hawaii is Module 4.
+    assert facts["anchorage-port-study"]["destination"] == {"city": "Anchorage", "country": "US", "in_canada_or_continental_usa": True, "rate_location_id": "C-ALASKA"}
+    assert longest["anchorage-port-study"] == 620 and facts["honolulu-science-meeting"]["destination"]["in_canada_or_continental_usa"] is False
+    # Mexico City: an Appendix D row paid in Canadian dollars, private accommodation.
+    mexico = facts["mexico-city-census-exchange"]
+    assert world()["rates"][mexico["destination"]["rate_location_id"]]["currency"] == "CAD" and mexico["accommodation"] == "private_non_commercial"
     appendices = {world()["rates"][fact["destination"]["rate_location_id"]]["appendix"] for fact in facts.values()}
     assert appendices == {"appendix_c", "appendix_d"}
+    assert {world()["rates"][fact["destination"]["rate_location_id"]]["currency"] for fact in facts.values()} == {"EUR", "GBP", "KES", "JPY", "USD", "CAD", "AUD"}
+    # The meal clock at each meal's minute and one minute either side, at the start and at the end of status.
     bounds = {(day["status_start_local"], day["status_end_local"]) for fact in facts.values() for day in fact["status_days"]}
-    for clock in ("07:00", "18:00"):
-        assert any(start == clock for start, _ in bounds)
-    for clock in ("12:00", "18:00", "06:59", "11:59", "17:59"):
-        assert any(end == clock for _, end in bounds)
-    assert any(start == "12:01" for start, _ in bounds)
+    for clock in ("07:00", "07:01", "12:01", "18:00", "18:01"):
+        assert any(start == clock for start, _ in bounds), clock
+    for clock in ("00:00", "06:59", "07:00", "11:59", "12:00", "12:01", "17:59", "18:00", "18:01"):
+        assert any(end == clock for _, end in bounds), clock

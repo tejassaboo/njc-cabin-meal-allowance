@@ -22,8 +22,17 @@ ORDER = [
     "currency-correct",
     "meals-correct",
     "incidentals-correct",
+    "total-correct",
 ]
 GOLD_TOKYO = case("tokyo-trade-talks")["expected"]
+LAZY = {"segment_cabins": [], "longest_continuous_air_minutes": 0, "currency": "CAD", "meal_allowance_minor": 0, "incidental_allowance_minor": 0, "total_minor": 0}
+
+
+def score_of(scenario, output):
+    result = verdict(scenario, output)
+    assert isinstance(result["score"], float) and 0.0 <= result["score"] <= 1.0
+    assert result["valid"] is (result["score"] == 1.0)  # valid stays strict: full marks only when everything is right
+    return result["score"]
 
 
 @pytest.mark.parametrize("scenario", SCENARIOS)
@@ -40,17 +49,110 @@ def test_the_hand_written_answer_passes(scenario: str) -> None:
 def test_each_broken_answer_fails_with_its_reason_code(scenario: str, index: int) -> None:
     broken = case(scenario)["broken"][index]
     result = verdict(scenario, {**case(scenario)["expected"], **broken["change"]})
-    assert result["valid"] is False and result["score"] == 0.0
+    assert result["valid"] is False and 0.0 <= result["score"] < 1.0
     assert result["message"].split(":")[0] == broken["reason"], (broken["why"], result["message"])
     failing = [entry for entry in result["details"]["constraints"] if entry["ok"] is False]
     assert failing[0]["id"] == broken["reason"]
 
 
-def test_a_failed_stage_leaves_later_stages_unchecked() -> None:
+def test_every_constraint_is_checked_and_the_first_failure_is_reported_in_stage_order() -> None:
+    """A submission naming a segment the journey does not have: integrity fails, the sold check skips the unknown
+    id, and the decision checks still run (so partial credit can be graded) without raising."""
     result = verdict("tokyo-trade-talks", {**GOLD_TOKYO, "segment_cabins": [{"segment_id": "S7", "cabin": "economy"}]})
     states = {entry["id"]: entry["ok"] for entry in result["details"]["constraints"]}
-    assert states["segments-match-journey"] is False
-    assert all(states[identifier] is None for identifier in ORDER[2:])
+    assert all(isinstance(state, bool) for state in states.values())
+    assert states["segments-match-journey"] is False and states["cabins-are-sold"] is True and states["cabins-correct"] is False
+    assert all(states[identifier] is True for identifier in ("longest-block-correct", "currency-correct", "meals-correct", "incidentals-correct", "total-correct"))
+    assert result["message"].startswith("segments-match-journey: not an outbound segment: S7; missing S1, S2 (+1 more)")
+    assert result["score"] == 0.25  # every amount is right, but the integrity failure caps the score
+
+
+@pytest.mark.parametrize("scenario", SCENARIOS)
+def test_the_gold_answer_scores_one_and_its_parts_sum_to_a_hundred(scenario: str) -> None:
+    result = verdict(scenario, case(scenario)["expected"])
+    assert result["score"] == 1.0
+    assert sum(result["details"]["score_parts"].values()) == 100
+
+
+def test_partial_credit_is_proportional_to_what_is_right() -> None:
+    tokyo = GOLD_TOKYO
+    # One of two cabins wrong (business where only premium economy is sold): half the 15-hundredth cabin weight.
+    assert score_of("tokyo-trade-talks", {**tokyo, "segment_cabins": [{"segment_id": "S1", "cabin": "business"}, {"segment_id": "S2", "cabin": "business"}]}) == 0.925
+    # Both cabins wrong: the whole cabin weight.
+    assert score_of("tokyo-trade-talks", {**tokyo, "segment_cabins": [{"segment_id": "S1", "cabin": "economy"}, {"segment_id": "S2", "cabin": "economy"}]}) == 0.85
+    # The longest block wrong (connection left out), cabins right: the 20-hundredth block weight.
+    assert score_of("tokyo-trade-talks", {**tokyo, "longest_continuous_air_minutes": 860}) == 0.8
+    # The currency alone: 5 hundredths.
+    assert score_of("tokyo-trade-talks", {**tokyo, "currency": "CAD"}) == 0.95
+    # Meals wrong with a consistent total: meals (30) and total (10).
+    assert score_of("tokyo-trade-talks", {**tokyo, "meal_allowance_minor": 4774001, "total_minor": 7648881}) == 0.6
+    # Incidentals wrong with a consistent total: incidentals (20) and total (10).
+    assert score_of("tokyo-trade-talks", {**tokyo, "incidental_allowance_minor": 2874881, "total_minor": 7648881}) == 0.7
+    # Meals and incidentals swapped: the total survives, 10 of the 60 money hundredths.
+    paris = case("paris-assembly")["expected"]
+    assert score_of("paris-assembly", {**paris, "meal_allowance_minor": 15704, "incidental_allowance_minor": 20020}) == 0.5
+    # One of three segments wrong on the three-segment journey: cabin credit in thirds (15 x 2/3 = 10).
+    sydney = case("sydney-reef-symposium")["expected"]
+    one_wrong = [dict(item) for item in sydney["segment_cabins"]]
+    one_wrong[0]["cabin"] = "business"
+    assert score_of("sydney-reef-symposium", {**sydney, "segment_cabins": one_wrong}) == 0.95
+
+
+@pytest.mark.parametrize("scenario", SCENARIOS)
+@pytest.mark.parametrize("name", ["meal_allowance_minor", "incidental_allowance_minor", "longest_continuous_air_minutes"])
+def test_too_high_and_too_low_score_the_same(scenario: str, name: str) -> None:
+    gold = case(scenario)["expected"]
+    scores = []
+    for delta in (-1, 1):
+        changed = {**gold, name: gold[name] + delta}
+        if name != "longest_continuous_air_minutes":
+            changed["total_minor"] = gold["total_minor"] + delta
+        scores.append(score_of(scenario, changed))
+    assert scores[0] == scores[1] < 1.0
+
+
+@pytest.mark.parametrize("scenario", SCENARIOS)
+def test_lazy_answers_score_at_or_near_zero(scenario: str) -> None:
+    """An empty, all-zero slip can earn only the currency weight (0.05) when CAD happens to be right."""
+    assert score_of(scenario, LAZY) <= 0.05
+    gold = case(scenario)["expected"]
+    economy = [{"segment_id": item["segment_id"], "cabin": "economy"} for item in gold["segment_cabins"]]
+    zeros = {**gold, "segment_cabins": economy, "longest_continuous_air_minutes": 0, "meal_allowance_minor": 0, "incidental_allowance_minor": 0, "total_minor": 0}
+    assert score_of(scenario, zeros) <= 0.2  # at most the cabin and currency weights, when economy is right
+
+
+def test_another_scenarios_answer_scores_low() -> None:
+    """Every amount is specific to the trip, so a cross-scenario answer earns little: the cabin and currency weights
+    when they coincide (0.20), the integrity cap (0.25) when the segment count differs, and 0.275 for London's
+    answer on Berlin, whose blocks are both 541 by design (the 540/541 straddle) and share one cabin."""
+    scores = {}
+    for scenario in SCENARIOS:
+        for other in SCENARIOS:
+            if other != scenario:
+                scores[(scenario, other)] = score_of(scenario, case(other)["expected"])
+    assert max(scores.values()) == 0.275
+    assert {pair for pair, score in scores.items() if score > 0.25} == {("london-secondment", "berlin-standards-meeting"), ("berlin-standards-meeting", "london-secondment")}
+    assert sum(score <= 0.2 for score in scores.values()) >= len(scores) - 4
+
+
+def test_an_integrity_failure_caps_the_score() -> None:
+    """Right amounts with an extra, repeated or missing segment id: at most INTEGRITY_CAP (documented in the README)."""
+    extra = {**GOLD_TOKYO, "segment_cabins": [*GOLD_TOKYO["segment_cabins"], {"segment_id": "S9", "cabin": "economy"}]}
+    assert score_of("tokyo-trade-talks", extra) == 0.25
+    repeated = {**GOLD_TOKYO, "segment_cabins": [GOLD_TOKYO["segment_cabins"][0], *GOLD_TOKYO["segment_cabins"]]}
+    assert score_of("tokyo-trade-talks", repeated) == 0.25
+    missing = {**GOLD_TOKYO, "segment_cabins": GOLD_TOKYO["segment_cabins"][:1]}
+    assert score_of("tokyo-trade-talks", missing) == 0.25
+    # The cap only lowers: an answer that is also wrong on the money earns min(its credit, the cap).
+    assert score_of("tokyo-trade-talks", {**extra, "meal_allowance_minor": 0, "total_minor": 2874880}) == 0.25  # 0.60 capped
+    assert score_of("tokyo-trade-talks", {**extra, "currency": "CAD", "longest_continuous_air_minutes": 1, "meal_allowance_minor": 0, "incidental_allowance_minor": 0, "total_minor": 0}) == 0.15
+    assert score_of("tokyo-trade-talks", LAZY) == 0.0
+
+
+def test_a_broken_answer_key_scores_zero() -> None:
+    wrong_key = build_output({**GOLD_TOKYO, "currency": "CAD"}, NjcEntitlementOutput)
+    result = verifier.verify_task(TASK, arguments("tokyo-trade-talks"), build_output(GOLD_TOKYO, NjcEntitlementOutput), wrong_key, ".")
+    assert result["valid"] is False and result["score"] == 0.0
 
 
 def test_messages_name_the_rule_and_the_numbers() -> None:

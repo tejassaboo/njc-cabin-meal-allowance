@@ -1,0 +1,64 @@
+{
+ "scenario": "anchorage-port-study",
+ "note": "Alaska counts as continental USA (rule 9): Module 3, so economy on both segments although YOW-YVR 305 + 105 connection + YVR-ANC 210 = 620 > 540. Appendix C row C-ALASKA, the Yukon amounts in US dollars. Commercial row: 08-09 (starts 06:00, lunch provided) breakfast+dinner 2735 + 8130 = 10865; 08-10 all 14335; 08-11 (dinner provided) breakfast+lunch 6205; 08-12 (ends 00:00, a part day) no meal = 31405. Incidentals 4 x 2500 = 10000, the midnight part day included.",
+ "expected": {
+  "segment_cabins": [
+   {
+    "segment_id": "S1",
+    "cabin": "economy"
+   },
+   {
+    "segment_id": "S2",
+    "cabin": "economy"
+   }
+  ],
+  "longest_continuous_air_minutes": 620,
+  "currency": "USD",
+  "meal_allowance_minor": 31405,
+  "incidental_allowance_minor": 10000,
+  "total_minor": 41405
+ },
+ "broken": [
+  {
+   "why": "Alaska treated as international: business on a 620-minute block",
+   "change": {
+    "segment_cabins": [
+     {
+      "segment_id": "S1",
+      "cabin": "business"
+     },
+     {
+      "segment_id": "S2",
+      "cabin": "business"
+     }
+    ]
+   },
+   "reason": "cabins-correct"
+  },
+  {
+   "why": "paid in Canadian dollars",
+   "change": {
+    "currency": "CAD"
+   },
+   "reason": "currency-correct"
+  },
+  {
+   "why": "the 12th dropped although it is a listed part day",
+   "change": {
+    "meal_allowance_minor": 31405,
+    "incidental_allowance_minor": 7500,
+    "total_minor": 38905
+   },
+   "reason": "incidentals-correct"
+  },
+  {
+   "why": "the Canada column's amounts instead of the Yukon amounts Alaska follows",
+   "change": {
+    "meal_allowance_minor": 27635,
+    "incidental_allowance_minor": 10000,
+    "total_minor": 37635
+   },
+   "reason": "meals-correct"
+  }
+ ]
+}

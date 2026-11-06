@@ -29,6 +29,10 @@ AIRPORTS = {
     "HND": ("Tokyo Haneda", "JP", "Asia/Tokyo"),
     "IAD": ("Washington Dulles", "US", "America/New_York"),
     "HNL": ("Honolulu", "US", "Pacific/Honolulu"),
+    "ANC": ("Anchorage", "US", "America/Anchorage"),
+    "SYD": ("Sydney Kingsford Smith", "AU", "Australia/Sydney"),
+    "BER": ("Berlin Brandenburg", "DE", "Europe/Berlin"),
+    "MEX": ("Mexico City", "MX", "America/Mexico_City"),
 }
 
 # id: (appendix, place, currency, breakfast, lunch, dinner, commercial incidental, private incidental)
@@ -58,6 +62,10 @@ TRAVELLERS = {
     "N106": ("Priya Raman", "Labour-market economist"),
     "N107": ("Owen MacLeod", "Oceanographer"),
     "N108": ("Louise Gagnon", "Northern infrastructure engineer"),
+    "N109": ("Hana Whitford", "Marine ecologist"),
+    "N110": ("Tomasz Nowak", "Metrology scientist"),
+    "N111": ("Rafael Dubois", "Port logistics planner"),
+    "N112": ("Ana Lucía Ferreira", "Demographer"),
 }
 
 E, P, B = "economy", "premium_economy", "business"
@@ -224,6 +232,94 @@ SCENARIOS = {
             ("2027-07-20", "05:30", None, []),
             ("2027-07-21", None, None, ["lunch"]),
             ("2027-07-22", None, "23:15", ["breakfast"]),
+        ],
+    },
+    "sydney-reef-symposium": {
+        "traveller_id": "N109",
+        "request_text": (
+            "Reef symposium in Sydney. The department booked me a night in Vancouver on the way out precisely so the "
+            "journey is split into shorter parts, and I'm told that decision 1575 then means economy throughout; I'd "
+            "rather you double-check. I was in the air for most of the 3rd, so I don't expect anything for that day. "
+            "I'm home at 18:01 on the 6th, just too late for dinner I suppose."
+        ),
+        "destination": ("Sydney", "AU", False, "D-AU-SYDNEY"),
+        "accommodation": "commercial",
+        "segments": [
+            ("MA 115", "YYZ", "YVR", "2027-09-01T17:30", 300, [E, B], True),
+            ("SP 820", "YVR", "HNL", "2027-09-02T09:30", 360, [E, P, B], False),
+            ("SP 61", "HNL", "SYD", "2027-09-02T14:05", 600, [E, P, B], False),
+        ],
+        "days": [
+            ("2027-09-01", "15:00", None, []),
+            ("2027-09-02", None, None, ["breakfast"]),
+            ("2027-09-03", None, None, ["breakfast", "lunch"]),
+            ("2027-09-04", None, None, []),
+            ("2027-09-05", None, None, ["dinner"]),
+            ("2027-09-06", None, "18:01", ["breakfast"]),
+        ],
+    },
+    "berlin-standards-meeting": {
+        "traveller_id": "N110",
+        "request_text": (
+            "Standards meeting in Berlin. The Berlin flight is seven hours and the hop to Montreal under an hour, so "
+            "nowhere near nine hours of flying, and Linden Air only sells economy on the long leg anyway, so economy "
+            "throughout I expect. I left home at 07:01 on the 18th, which is breakfast time in anyone's book, and I'm "
+            "home at 07:00 sharp on the 22nd, too early to count anything."
+        ),
+        "destination": ("Berlin", "DE", False, "D-DE-BERLIN"),
+        "accommodation": "commercial",
+        "segments": [
+            ("MA 420", "YOW", "YUL", "2027-10-18T15:35", 55, [E, B], False),
+            ("LN 702", "YUL", "BER", "2027-10-18T17:35", 421, [E], False),
+        ],
+        "days": [
+            ("2027-10-18", "07:01", None, ["dinner"]),
+            ("2027-10-19", None, None, ["breakfast"]),
+            ("2027-10-20", None, None, ["lunch"]),
+            ("2027-10-21", None, None, []),
+            ("2027-10-22", None, "07:00", []),
+        ],
+    },
+    "anchorage-port-study": {
+        "traveller_id": "N111",
+        "request_text": (
+            "Port logistics study in Anchorage. Alaska isn't the lower 48, so this is international travel: business "
+            "class on the ten-hour journey please, and the foreign allowance in US dollars. The Vancouver stop is over "
+            "an hour and a half, I know, but the flying adds up. I'm home at exactly midnight going into the 12th, so "
+            "there's nothing to claim for that day."
+        ),
+        "destination": ("Anchorage", "US", True, "C-ALASKA"),
+        "accommodation": "commercial",
+        "segments": [
+            ("MA 305", "YOW", "YVR", "2027-08-09T08:10", 305, [E, B], False),
+            ("BW 2410", "YVR", "ANC", "2027-08-09T12:00", 210, [E, B], False),
+        ],
+        "days": [
+            ("2027-08-09", "06:00", None, ["lunch"]),
+            ("2027-08-10", None, None, []),
+            ("2027-08-11", None, None, ["dinner"]),
+            ("2027-08-12", None, "00:00", []),
+        ],
+    },
+    "mexico-city-census-exchange": {
+        "traveller_id": "N112",
+        "request_text": (
+            "Census methods exchange in Mexico City. I'm staying with a colleague's family in Coyoacán. Please pay the "
+            "allowances in pesos, since Appendix D is for foreign countries, and at the hotel rate for incidentals. I "
+            "set off at 18:01 on the 16th, so dinner that night should count, and I'm back at 12:01 on the 20th, which "
+            "is past lunch, so don't bother with that."
+        ),
+        "destination": ("Mexico City", "MX", False, "D-MX-MEXICO-CITY"),
+        "accommodation": "private_non_commercial",
+        "segments": [
+            ("AK 905", "YYZ", "MEX", "2027-11-16T20:15", 345, [E, P, B], False),
+        ],
+        "days": [
+            ("2027-11-16", "18:01", None, []),
+            ("2027-11-17", None, None, ["dinner"]),
+            ("2027-11-18", None, None, ["lunch"]),
+            ("2027-11-19", None, None, []),
+            ("2027-11-20", None, "12:01", ["breakfast"]),
         ],
     },
 }
